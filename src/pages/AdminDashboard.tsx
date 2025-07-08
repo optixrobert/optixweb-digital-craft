@@ -6,7 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { LogOut, Users, Ticket, AlertCircle, CheckCircle } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { LogOut, Users, Ticket, AlertCircle, CheckCircle, FileText, Plus, Edit, Trash2 } from 'lucide-react';
+import BlogPostDialog from '@/components/BlogPostDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
@@ -48,6 +50,27 @@ interface Subscriber {
   created_at: string;
 }
 
+interface BlogPost {
+  id: string;
+  title: string;
+  content: string;
+  excerpt: string | null;
+  slug: string;
+  published: boolean;
+  featured_image_url: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  tags: string[] | null;
+  created_at: string;
+  updated_at: string;
+  published_at: string | null;
+  profiles: {
+    email: string;
+    first_name: string;
+    last_name: string;
+  };
+}
+
 const statusColors = {
   open: 'bg-blue-100 text-blue-800',
   in_progress: 'bg-yellow-100 text-yellow-800',
@@ -69,8 +92,11 @@ export default function AdminDashboard() {
   const [tickets, setTickets] = useState<TicketWithProfile[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showBlogDialog, setShowBlogDialog] = useState(false);
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -105,7 +131,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [ticketsResponse, profilesResponse, subscribersResponse] = await Promise.all([
+      const [ticketsResponse, profilesResponse, subscribersResponse, blogResponse] = await Promise.all([
         supabase
           .from('tickets')
           .select(`
@@ -120,16 +146,25 @@ export default function AdminDashboard() {
         supabase
           .from('subscribers')
           .select('*')
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('blog_posts')
+          .select(`
+            *,
+            profiles!blog_posts_author_id_fkey(email, first_name, last_name)
+          `)
           .order('created_at', { ascending: false })
       ]);
 
       if (ticketsResponse.error) throw ticketsResponse.error;
       if (profilesResponse.error) throw profilesResponse.error;
       if (subscribersResponse.error) throw subscribersResponse.error;
+      if (blogResponse.error) throw blogResponse.error;
 
       setTickets((ticketsResponse.data as TicketWithProfile[]) || []);
       setProfiles(profilesResponse.data || []);
       setSubscribers(subscribersResponse.data || []);
+      setBlogPosts((blogResponse.data as BlogPost[]) || []);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast({
@@ -184,12 +219,37 @@ export default function AdminDashboard() {
     });
   };
 
+  const deleteBlogPost = async (postId: string) => {
+    try {
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', postId);
+
+      if (error) throw error;
+
+      setBlogPosts(blogPosts.filter(post => post.id !== postId));
+      toast({
+        title: "Articolo eliminato",
+        description: "L'articolo è stato eliminato con successo",
+      });
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      toast({
+        title: "Errore",
+        description: "Errore nell'eliminazione dell'articolo",
+        variant: "destructive",
+      });
+    }
+  };
+
   const getStatsData = () => {
     const openTickets = tickets.filter(t => t.status === 'open').length;
     const inProgressTickets = tickets.filter(t => t.status === 'in_progress').length;
     const resolvedTickets = tickets.filter(t => t.status === 'resolved').length;
     const totalUsers = profiles.length;
     const activeSubscriptions = subscribers.filter(s => s.subscribed).length;
+    const publishedPosts = blogPosts.filter(p => p.published).length;
     const totalRevenue = subscribers
       .filter(s => s.subscribed)
       .reduce((acc, s) => {
@@ -201,7 +261,7 @@ export default function AdminDashboard() {
         return acc + (tierRevenue[s.subscription_tier as keyof typeof tierRevenue] || 0);
       }, 0);
 
-    return { openTickets, inProgressTickets, resolvedTickets, totalUsers, activeSubscriptions, totalRevenue };
+    return { openTickets, inProgressTickets, resolvedTickets, totalUsers, activeSubscriptions, publishedPosts, totalRevenue };
   };
 
   if (loading) {
@@ -297,6 +357,16 @@ export default function AdminDashboard() {
             
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Articoli Pubblicati</CardTitle>
+                <FileText className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-optix-blue">{stats.publishedPosts}</div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Ricavi Mensili</CardTitle>
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
@@ -306,135 +376,242 @@ export default function AdminDashboard() {
             </Card>
           </div>
 
-          {/* Subscribers Table */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Gestione Abbonamenti</CardTitle>
-              <CardDescription>
-                Visualizza tutti gli abbonamenti dei clienti
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Piano</TableHead>
-                    <TableHead>Stato</TableHead>
-                    <TableHead>Scadenza</TableHead>
-                    <TableHead>Data Iscrizione</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {subscribers.map((subscriber) => (
-                    <TableRow key={subscriber.id}>
-                      <TableCell className="font-medium">{subscriber.email}</TableCell>
-                      <TableCell>
-                        {subscriber.subscription_tier ? (
-                          <Badge className="bg-optix-blue text-white">
-                            {subscriber.subscription_tier}
-                          </Badge>
-                        ) : (
-                          <span className="text-muted-foreground">Nessun piano</span>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <Badge className={subscriber.subscribed ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
-                          {subscriber.subscribed ? 'Attivo' : 'Inattivo'}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {subscriber.subscription_end ? formatDate(subscriber.subscription_end) : 'N/A'}
-                      </TableCell>
-                      <TableCell>{formatDate(subscriber.created_at)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <Tabs defaultValue="blog" className="space-y-6">
+            <TabsList>
+              <TabsTrigger value="blog">Gestione Blog</TabsTrigger>
+              <TabsTrigger value="subscribers">Abbonamenti</TabsTrigger>
+              <TabsTrigger value="tickets">Ticket Support</TabsTrigger>
+            </TabsList>
 
-          {/* Tickets Table */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Gestione Ticket</CardTitle>
-              <CardDescription>
-                Visualizza e gestisci tutti i ticket di supporto
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Titolo</TableHead>
-                    <TableHead>Cliente</TableHead>
-                    <TableHead>Categoria</TableHead>
-                    <TableHead>Priorità</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Data</TableHead>
-                    <TableHead>Azioni</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {tickets.map((ticket) => (
-                    <TableRow key={ticket.id}>
-                      <TableCell className="font-medium">
-                        <div>
-                          <div className="font-semibold">{ticket.title}</div>
-                          <div className="text-sm text-muted-foreground truncate max-w-xs">
-                            {ticket.description}
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">
-                            {ticket.profiles.first_name} {ticket.profiles.last_name}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {ticket.profiles.email}
-                          </div>
-                          {ticket.profiles.company && (
-                            <div className="text-xs text-muted-foreground">
-                              {ticket.profiles.company}
+            {/* Blog Management */}
+            <TabsContent value="blog">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle>Gestione Blog</CardTitle>
+                    <CardDescription>
+                      Crea e gestisci gli articoli del blog per migliorare la SEO
+                    </CardDescription>
+                  </div>
+                  <Button onClick={() => setShowBlogDialog(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Nuovo Articolo
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Titolo</TableHead>
+                        <TableHead>Autore</TableHead>
+                        <TableHead>Stato</TableHead>
+                        <TableHead>Data Creazione</TableHead>
+                        <TableHead>Azioni</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {blogPosts.map((post) => (
+                        <TableRow key={post.id}>
+                          <TableCell>
+                            <div>
+                              <div className="font-semibold">{post.title}</div>
+                              <div className="text-sm text-muted-foreground">{post.slug}</div>
+                              {post.excerpt && (
+                                <div className="text-xs text-muted-foreground max-w-xs truncate">
+                                  {post.excerpt}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell>{ticket.category}</TableCell>
-                      <TableCell>
-                        <Badge className={priorityColors[ticket.priority]}>
-                          {ticket.priority}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge className={statusColors[ticket.status]}>
-                          {ticket.status.replace('_', ' ')}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{formatDate(ticket.created_at)}</TableCell>
-                      <TableCell>
-                        <Select
-                          value={ticket.status}
-                          onValueChange={(value) => updateTicketStatus(ticket.id, value)}
-                        >
-                          <SelectTrigger className="w-32">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="open">Aperto</SelectItem>
-                            <SelectItem value="in_progress">In Lavorazione</SelectItem>
-                            <SelectItem value="resolved">Risolto</SelectItem>
-                            <SelectItem value="closed">Chiuso</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                          </TableCell>
+                          <TableCell>
+                            <div>
+                              <div className="font-medium">
+                                {post.profiles.first_name} {post.profiles.last_name}
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {post.profiles.email}
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Badge className={post.published ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                              {post.published ? 'Pubblicato' : 'Bozza'}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{formatDate(post.created_at)}</TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  setEditingPost(post);
+                                  setShowBlogDialog(true);
+                                }}
+                              >
+                                <Edit className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => deleteBlogPost(post.id)}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Subscribers */}
+            <TabsContent value="subscribers">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Gestione Abbonamenti</CardTitle>
+                  <CardDescription>
+                    Visualizza tutti gli abbonamenti dei clienti
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Piano</TableHead>
+                        <TableHead>Stato</TableHead>
+                        <TableHead>Scadenza</TableHead>
+                        <TableHead>Data Iscrizione</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {subscribers.map((subscriber) => (
+                        <TableRow key={subscriber.id}>
+                          <TableCell className="font-medium">{subscriber.email}</TableCell>
+                          <TableCell>
+                            {subscriber.subscription_tier ? (
+                              <Badge className="bg-optix-blue text-white">
+                                {subscriber.subscription_tier}
+                              </Badge>
+                            ) : (
+                              <span className="text-muted-foreground">Nessun piano</span>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <Badge className={subscriber.subscribed ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                              {subscriber.subscribed ? 'Attivo' : 'Inattivo'}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            {subscriber.subscription_end ? formatDate(subscriber.subscription_end) : 'N/A'}
+                          </TableCell>
+                          <TableCell>{formatDate(subscriber.created_at)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Tickets */}
+            <TabsContent value="tickets">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Gestione Ticket</CardTitle>
+                  <CardDescription>
+                    Visualizza e gestisci tutti i ticket di supporto
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Titolo</TableHead>
+                        <TableHead>Cliente</TableHead>
+                        <TableHead>Categoria</TableHead>
+                        <TableHead>Priorità</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Data</TableHead>
+                        <TableHead>Azioni</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {tickets.map((ticket) => (
+                        <TableRow key={ticket.id}>
+                          <TableCell className="font-medium">
+                            <div>
+                              <div className="font-semibold">{ticket.title}</div>
+                              <div className="text-sm text-muted-foreground truncate max-w-xs">
+                                {ticket.description}
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div>
+                              <div className="font-medium">
+                                {ticket.profiles.first_name} {ticket.profiles.last_name}
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {ticket.profiles.email}
+                              </div>
+                              {ticket.profiles.company && (
+                                <div className="text-xs text-muted-foreground">
+                                  {ticket.profiles.company}
+                                </div>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>{ticket.category}</TableCell>
+                          <TableCell>
+                            <Badge className={priorityColors[ticket.priority]}>
+                              {ticket.priority}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge className={statusColors[ticket.status]}>
+                              {ticket.status.replace('_', ' ')}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{formatDate(ticket.created_at)}</TableCell>
+                          <TableCell>
+                            <Select
+                              value={ticket.status}
+                              onValueChange={(value) => updateTicketStatus(ticket.id, value)}
+                            >
+                              <SelectTrigger className="w-32">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="open">Aperto</SelectItem>
+                                <SelectItem value="in_progress">In Lavorazione</SelectItem>
+                                <SelectItem value="resolved">Risolto</SelectItem>
+                                <SelectItem value="closed">Chiuso</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+
+          <BlogPostDialog
+            open={showBlogDialog}
+            onOpenChange={(open) => {
+              setShowBlogDialog(open);
+              if (!open) setEditingPost(null);
+            }}
+            post={editingPost}
+            onSuccess={fetchData}
+          />
         </div>
       </main>
       <Footer />
