@@ -8,28 +8,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://vdokiyowgmsdqjaewcxi.supabase.co">
     
-    <!-- Critical CSS for above-the-fold content -->
+    <!-- Critical CSS inline for mobile-first performance -->
     <style>
-      /* Critical CSS inline for faster rendering */
-      body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
-      .loading-screen { 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        background: linear-gradient(135deg, #1e40af 0%, #059669 100%); 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        z-index: 9999; 
-        color: white; 
-        font-size: 1.5rem; 
-        opacity: 1; 
-        transition: opacity 0.3s ease; 
+      /* Critical CSS inline for faster mobile rendering */
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+      body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5;color:#0f172a;background:#ffffff}
+      .loading-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1e40af 0%,#059669 100%);display:flex;align-items:center;justify-content:center;z-index:9999;color:white;font-size:1.25rem;font-weight:600;opacity:1;transition:opacity 0.3s ease}
+      .loading-screen.fade-out{opacity:0;pointer-events:none}
+      .hero-bg{background:linear-gradient(135deg,rgba(30,64,175,0.05) 0%,rgba(5,150,105,0.05) 100%)}
+      .btn-primary{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border-radius:0.375rem;font-size:0.875rem;font-weight:500;transition:all 0.15s ease;background:linear-gradient(135deg,#1e40af,#059669);color:white;padding:0.75rem 1.5rem;text-decoration:none;border:none;cursor:pointer}
+      .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 25px rgba(30,64,175,0.3)}
+      @media (max-width: 768px) {
+        .hero-text{font-size:2.25rem;line-height:1.2}
+        .hero-subtitle{font-size:1.125rem}
+        .btn-primary{padding:0.875rem 2rem;font-size:1rem}
       }
-      .loading-screen.fade-out { opacity: 0; pointer-events: none; }
     </style>
     <title>Optixweb.space | Web Agency Professionale - Realizzazione Siti Web e Applicazioni</title>
     <meta name="description" content="Web agency italiana specializzata in realizzazione siti web professionali, sviluppo applicazioni web custom e consulenza digitale per PMI, startup e professionisti." />
