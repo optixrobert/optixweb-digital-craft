@@ -80,16 +80,10 @@ export const GA4Events = {
 
 // Inizializza GA4 con il Measurement ID
 export const initGA4 = () => {
-  // Per ora useremo un measurement ID placeholder
-  // L'utente dovrà configurarlo tramite Supabase secrets
-  const measurementId = import.meta.env.VITE_GA4_MEASUREMENT_ID || 'G-XXXXXXXXXX';
+  const measurementId = 'G-L9LDMSFB3V'; // Tuo Measurement ID GA4
   
-  if (measurementId && measurementId !== 'G-XXXXXXXXXX') {
-    initializeGA4(measurementId);
-    console.log('GA4 inizializzato con ID:', measurementId);
-  } else {
-    console.warn('GA4 Measurement ID non configurato. Configura la variabile VITE_GA4_MEASUREMENT_ID');
-  }
+  initializeGA4(measurementId);
+  console.log('GA4 inizializzato con ID:', measurementId);
 };
 
 export default { useGA4PageTracking, trackEvent, GA4Events, initGA4 };
