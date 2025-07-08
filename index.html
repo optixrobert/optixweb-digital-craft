@@ -3,6 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Preconnect to critical external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    
+    <!-- Critical CSS for above-the-fold content -->
+    <style>
+      /* Critical CSS inline for faster rendering */
+      body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+      .loading-screen { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background: linear-gradient(135deg, #1e40af 0%, #059669 100%); 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        z-index: 9999; 
+        color: white; 
+        font-size: 1.5rem; 
+        opacity: 1; 
+        transition: opacity 0.3s ease; 
+      }
+      .loading-screen.fade-out { opacity: 0; pointer-events: none; }
+    </style>
     <title>Optixweb.space | Web Agency Professionale - Realizzazione Siti Web e Applicazioni</title>
     <meta name="description" content="Web agency italiana specializzata in realizzazione siti web professionali, sviluppo applicazioni web custom e consulenza digitale per PMI, startup e professionisti." />
     <meta name="author" content="Optixweb.space" />
@@ -13,18 +41,49 @@
     <meta name="geo.country" content="Italy" />
     <link rel="canonical" href="https://optixweb.space" />
 
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Optixweb.space | Web Agency Professionale" />
     <meta property="og:description" content="Costruiamo la tua presenza digitale con siti web professionali e applicazioni web su misura." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://optixweb.space" />
 
+    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- Performance optimizations -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <meta name="theme-color" content="#1e40af">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Resource hints for critical resources -->
+    <link rel="modulepreload" href="/src/main.tsx">
+    <link rel="modulepreload" href="/src/App.tsx">
   </head>
 
   <body>
+    <!-- Loading screen for better perceived performance -->
+    <div id="loading-screen" class="loading-screen">
+      <div>Caricamento...</div>
+    </div>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Remove loading screen after app loads -->
+    <script>
+      window.addEventListener('load', function() {
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+          loadingScreen.classList.add('fade-out');
+          setTimeout(() => loadingScreen.remove(), 300);
+        }
+      });
+    </script>
   </body>
 </html>
