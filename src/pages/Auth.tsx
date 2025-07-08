@@ -48,6 +48,7 @@ export default function Auth() {
   useEffect(() => {
     const checkUserAndRedirect = async () => {
       if (user) {
+        console.log('User logged in:', user.id, user.email);
         try {
           const { data, error } = await supabase
             .from('profiles')
@@ -55,11 +56,15 @@ export default function Auth() {
             .eq('user_id', user.id)
             .single();
 
+          console.log('Profile query result:', data, error);
+
           if (error) throw error;
           
           if (data?.is_admin) {
+            console.log('User is admin, redirecting to /admin');
             navigate('/admin');
           } else {
+            console.log('User is not admin, redirecting to /area-clienti');
             navigate('/area-clienti');
           }
         } catch (error) {
