@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { PlusCircle, MessageSquare, LogOut } from 'lucide-react';
+import { PlusCircle, MessageSquare, LogOut, CreditCard, RefreshCw } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CreateTicketDialog from '@/components/CreateTicketDialog';
+import SubscriptionPlans from '@/components/SubscriptionPlans';
 
 interface Ticket {
   id: string;
@@ -36,11 +38,13 @@ const priorityColors = {
 };
 
 export default function AreaClienti() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, subscriptionData, isCheckingSubscription, checkSubscription } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [isManagingSubscription, setIsManagingSubscription] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -81,6 +85,25 @@ export default function AreaClienti() {
     });
   };
 
+  const handleManageSubscription = async () => {
+    setIsManagingSubscription(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      if (error) throw error;
+      
+      window.open(data.url, '_blank');
+    } catch (error) {
+      console.error('Error opening customer portal:', error);
+      toast({
+        title: "Errore",
+        description: "Errore nell'apertura del portale clienti. Riprova più tardi.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsManagingSubscription(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -105,13 +128,13 @@ export default function AreaClienti() {
             <div>
               <h1 className="text-3xl font-bold text-optix-navy">Area Clienti</h1>
               <p className="text-muted-foreground mt-2">
-                Benvenuto {user?.email}, gestisci i tuoi ticket di supporto
+                Benvenuto {user?.email}, gestisci i tuoi ticket di supporto e il tuo abbonamento
               </p>
             </div>
-            <div className="flex gap-4">
-              <Button onClick={() => setShowCreateDialog(true)}>
-                <PlusCircle className="w-4 h-4 mr-2" />
-                Nuovo Ticket
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={checkSubscription} disabled={isCheckingSubscription}>
+                <RefreshCw className={`w-4 h-4 mr-2 ${isCheckingSubscription ? 'animate-spin' : ''}`} />
+                Aggiorna Status
               </Button>
               <Button variant="outline" onClick={handleSignOut}>
                 <LogOut className="w-4 h-4 mr-2" />
@@ -120,7 +143,85 @@ export default function AreaClienti() {
             </div>
           </div>
 
-          {tickets.length === 0 ? (
+          {/* Subscription Status Card */}
+          <Card className="mb-8">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <div>
+                  <CardTitle className="flex items-center">
+                    <CreditCard className="w-5 h-5 mr-2" />
+                    Stato Abbonamento
+                  </CardTitle>
+                  <CardDescription>
+                    {subscriptionData?.subscribed 
+                      ? `Piano ${subscriptionData.subscription_tier} attivo`
+                      : 'Nessun abbonamento attivo'
+                    }
+                  </CardDescription>
+                </div>
+                {subscriptionData?.subscribed && (
+                  <Button 
+                    variant="outline" 
+                    onClick={handleManageSubscription}
+                    disabled={isManagingSubscription}
+                  >
+                    {isManagingSubscription ? (
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-optix-blue mr-2"></div>
+                        Caricamento...
+                      </div>
+                    ) : (
+                      'Gestisci Abbonamento'
+                    )}
+                  </Button>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent>
+              {subscriptionData?.subscribed ? (
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Piano:</span>
+                    <Badge className="bg-optix-green text-white">
+                      {subscriptionData.subscription_tier}
+                    </Badge>
+                  </div>
+                  {subscriptionData.subscription_end && (
+                    <div className="flex justify-between">
+                      <span>Rinnovo:</span>
+                      <span className="text-sm text-muted-foreground">
+                        {formatDate(subscriptionData.subscription_end)}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-center py-4">
+                  <p className="text-muted-foreground mb-4">
+                    Sottoscrivi un abbonamento per accedere al supporto completo
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {!subscriptionData?.subscribed && (
+            <div className="mb-8">
+              <SubscriptionPlans />
+            </div>
+          )}
+
+          {subscriptionData?.subscribed && (
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-optix-navy">I tuoi Ticket</h2>
+              <Button onClick={() => setShowCreateDialog(true)}>
+                <PlusCircle className="w-4 h-4 mr-2" />
+                Nuovo Ticket
+              </Button>
+            </div>
+          )}
+
+          {subscriptionData?.subscribed && tickets.length === 0 ? (
             <Card>
               <CardContent className="text-center py-12">
                 <MessageSquare className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
@@ -134,7 +235,7 @@ export default function AreaClienti() {
                 </Button>
               </CardContent>
             </Card>
-          ) : (
+          ) : subscriptionData?.subscribed ? (
             <div className="grid gap-6">
               {tickets.map((ticket) => (
                 <Card key={ticket.id} className="hover:shadow-md transition-shadow">
@@ -163,7 +264,7 @@ export default function AreaClienti() {
                 </Card>
               ))}
             </div>
-          )}
+          ) : null}
         </div>
       </main>
       <Footer />

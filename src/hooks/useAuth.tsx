@@ -6,9 +6,16 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
+  subscriptionData: {
+    subscribed: boolean;
+    subscription_tier: string | null;
+    subscription_end: string | null;
+  } | null;
+  isCheckingSubscription: boolean;
   signUp: (email: string, password: string, userData?: any) => Promise<any>;
   signIn: (email: string, password: string) => Promise<any>;
   signOut: () => Promise<void>;
+  checkSubscription: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,6 +24,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [subscriptionData, setSubscriptionData] = useState<{
+    subscribed: boolean;
+    subscription_tier: string | null;
+    subscription_end: string | null;
+  } | null>(null);
+  const [isCheckingSubscription, setIsCheckingSubscription] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener
@@ -33,6 +46,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(session);
       setUser(session?.user ?? null);
       setIsLoading(false);
+      if (session?.user) {
+        checkSubscription();
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -62,6 +78,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     await supabase.auth.signOut();
+    setSubscriptionData(null);
+  };
+
+  const checkSubscription = async () => {
+    if (!user) return;
+    
+    setIsCheckingSubscription(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('check-subscription');
+      if (error) throw error;
+      setSubscriptionData(data);
+    } catch (error) {
+      console.error('Error checking subscription:', error);
+      setSubscriptionData({ subscribed: false, subscription_tier: null, subscription_end: null });
+    } finally {
+      setIsCheckingSubscription(false);
+    }
   };
 
   return (
@@ -69,9 +102,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user,
       session,
       isLoading,
+      subscriptionData,
+      isCheckingSubscription,
       signUp,
       signIn,
-      signOut
+      signOut,
+      checkSubscription
     }}>
       {children}
     </AuthContext.Provider>

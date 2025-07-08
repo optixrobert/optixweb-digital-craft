@@ -38,6 +38,16 @@ interface Profile {
   is_admin: boolean;
 }
 
+interface Subscriber {
+  id: string;
+  email: string;
+  subscribed: boolean;
+  subscription_tier: string | null;
+  subscription_end: string | null;
+  stripe_customer_id: string | null;
+  created_at: string;
+}
+
 const statusColors = {
   open: 'bg-blue-100 text-blue-800',
   in_progress: 'bg-yellow-100 text-yellow-800',
@@ -58,6 +68,7 @@ export default function AdminDashboard() {
   const { toast } = useToast();
   const [tickets, setTickets] = useState<TicketWithProfile[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -94,7 +105,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [ticketsResponse, profilesResponse] = await Promise.all([
+      const [ticketsResponse, profilesResponse, subscribersResponse] = await Promise.all([
         supabase
           .from('tickets')
           .select(`
@@ -105,14 +116,20 @@ export default function AdminDashboard() {
         supabase
           .from('profiles')
           .select('*')
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('subscribers')
+          .select('*')
           .order('created_at', { ascending: false })
       ]);
 
       if (ticketsResponse.error) throw ticketsResponse.error;
       if (profilesResponse.error) throw profilesResponse.error;
+      if (subscribersResponse.error) throw subscribersResponse.error;
 
       setTickets((ticketsResponse.data as TicketWithProfile[]) || []);
       setProfiles(profilesResponse.data || []);
+      setSubscribers(subscribersResponse.data || []);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast({
@@ -172,8 +189,19 @@ export default function AdminDashboard() {
     const inProgressTickets = tickets.filter(t => t.status === 'in_progress').length;
     const resolvedTickets = tickets.filter(t => t.status === 'resolved').length;
     const totalUsers = profiles.length;
+    const activeSubscriptions = subscribers.filter(s => s.subscribed).length;
+    const totalRevenue = subscribers
+      .filter(s => s.subscribed)
+      .reduce((acc, s) => {
+        const tierRevenue = {
+          'Basic': 200,
+          'Premium': 400,
+          'Enterprise': 700
+        };
+        return acc + (tierRevenue[s.subscription_tier as keyof typeof tierRevenue] || 0);
+      }, 0);
 
-    return { openTickets, inProgressTickets, resolvedTickets, totalUsers };
+    return { openTickets, inProgressTickets, resolvedTickets, totalUsers, activeSubscriptions, totalRevenue };
   };
 
   if (loading) {
@@ -216,7 +244,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Ticket Aperti</CardTitle>
@@ -256,7 +284,75 @@ export default function AdminDashboard() {
                 <div className="text-2xl font-bold text-optix-navy">{stats.totalUsers}</div>
               </CardContent>
             </Card>
+            
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Abbonamenti Attivi</CardTitle>
+                <CheckCircle className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-green-600">{stats.activeSubscriptions}</div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Ricavi Mensili</CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-optix-green">€{stats.totalRevenue}</div>
+              </CardContent>
+            </Card>
           </div>
+
+          {/* Subscribers Table */}
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Gestione Abbonamenti</CardTitle>
+              <CardDescription>
+                Visualizza tutti gli abbonamenti dei clienti
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Piano</TableHead>
+                    <TableHead>Stato</TableHead>
+                    <TableHead>Scadenza</TableHead>
+                    <TableHead>Data Iscrizione</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {subscribers.map((subscriber) => (
+                    <TableRow key={subscriber.id}>
+                      <TableCell className="font-medium">{subscriber.email}</TableCell>
+                      <TableCell>
+                        {subscriber.subscription_tier ? (
+                          <Badge className="bg-optix-blue text-white">
+                            {subscriber.subscription_tier}
+                          </Badge>
+                        ) : (
+                          <span className="text-muted-foreground">Nessun piano</span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Badge className={subscriber.subscribed ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                          {subscriber.subscribed ? 'Attivo' : 'Inattivo'}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {subscriber.subscription_end ? formatDate(subscriber.subscription_end) : 'N/A'}
+                      </TableCell>
+                      <TableCell>{formatDate(subscriber.created_at)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
 
           {/* Tickets Table */}
           <Card>
