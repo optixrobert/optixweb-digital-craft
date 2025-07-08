@@ -1,12 +1,56 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star } from "lucide-react";
+import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-image.jpg";
 
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string | null;
+  slug: string;
+  created_at: string;
+  featured_image_url: string | null;
+  profiles: {
+    first_name: string;
+    last_name: string;
+  };
+}
+
 const Index = () => {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    const fetchLatestPosts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select(`
+            id,
+            title,
+            excerpt,
+            slug,
+            created_at,
+            featured_image_url,
+            profiles!blog_posts_author_id_fkey(first_name, last_name)
+          `)
+          .eq('published', true)
+          .order('published_at', { ascending: false })
+          .limit(3);
+
+        if (error) throw error;
+        setBlogPosts((data as BlogPost[]) || []);
+      } catch (error) {
+        console.error('Error fetching blog posts:', error);
+      }
+    };
+
+    fetchLatestPosts();
+  }, []);
   const services = [
     {
       icon: Code,
@@ -128,6 +172,82 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Blog Section */}
+      {blogPosts.length > 0 && (
+        <section className="py-20 bg-gradient-to-br from-optix-light/30 to-background">
+          <div className="container mx-auto px-4 lg:px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                Dal nostro blog
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Insights, guide e approfondimenti sul mondo del web design e dello sviluppo digitale
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {blogPosts.map((post) => (
+                <Card key={post.id} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white overflow-hidden group">
+                  <div className="relative">
+                    {post.featured_image_url ? (
+                      <img 
+                        src={post.featured_image_url} 
+                        alt={post.title}
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-48 bg-gradient-to-br from-optix-blue/20 to-optix-green/20 flex items-center justify-center">
+                        <FileText className="h-12 w-12 text-optix-blue/60" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <Calendar className="h-4 w-4" />
+                      <time>{new Date(post.created_at).toLocaleDateString('it-IT')}</time>
+                      <span>•</span>
+                      <span>di {post.profiles.first_name} {post.profiles.last_name}</span>
+                    </div>
+                    
+                    <h3 className="font-bold text-lg mb-3 group-hover:text-optix-blue transition-colors duration-300 line-clamp-2">
+                      {post.title}
+                    </h3>
+                    
+                    {post.excerpt && (
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                    )}
+                    
+                    <Button 
+                      variant="ghost" 
+                      className="p-0 h-auto text-optix-blue hover:text-optix-blue/80 hover:bg-transparent group/btn"
+                      asChild
+                    >
+                      <Link to={`/blog/${post.slug}`}>
+                        Leggi l'articolo
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            <div className="text-center">
+              <Button asChild variant="outline" size="lg" className="border-optix-blue text-optix-blue hover:bg-optix-light">
+                <Link to="/blog">
+                  Vedi tutti gli articoli
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Why Choose Us Section */}
       <section className="py-20">
