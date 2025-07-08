@@ -3,30 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Preconnect to critical external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://vdokiyowgmsdqjaewcxi.supabase.co">
-    
-    <!-- Critical CSS inline for mobile-first performance -->
-    <style>
-      /* Critical CSS inline for faster mobile rendering */
-      *{box-sizing:border-box}
-      html{scroll-behavior:smooth;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-      body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5;color:#0f172a;background:#ffffff}
-      .loading-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1e40af 0%,#059669 100%);display:flex;align-items:center;justify-content:center;z-index:9999;color:white;font-size:1.25rem;font-weight:600;opacity:1;transition:opacity 0.3s ease}
-      .loading-screen.fade-out{opacity:0;pointer-events:none}
-      .hero-bg{background:linear-gradient(135deg,rgba(30,64,175,0.05) 0%,rgba(5,150,105,0.05) 100%)}
-      .btn-primary{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border-radius:0.375rem;font-size:0.875rem;font-weight:500;transition:all 0.15s ease;background:linear-gradient(135deg,#1e40af,#059669);color:white;padding:0.75rem 1.5rem;text-decoration:none;border:none;cursor:pointer}
-      .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 25px rgba(30,64,175,0.3)}
-      @media (max-width: 768px) {
-        .hero-text{font-size:2.25rem;line-height:1.2}
-        .hero-subtitle{font-size:1.125rem}
-        .btn-primary{padding:0.875rem 2rem;font-size:1rem}
-      }
-    </style>
     <title>Optixweb.space | Web Agency Professionale - Realizzazione Siti Web e Applicazioni</title>
     <meta name="description" content="Web agency italiana specializzata in realizzazione siti web professionali, sviluppo applicazioni web custom e consulenza digitale per PMI, startup e professionisti." />
     <meta name="author" content="Optixweb.space" />
@@ -37,49 +13,18 @@
     <meta name="geo.country" content="Italy" />
     <link rel="canonical" href="https://optixweb.space" />
 
-    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Optixweb.space | Web Agency Professionale" />
     <meta property="og:description" content="Costruiamo la tua presenza digitale con siti web professionali e applicazioni web su misura." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <meta property="og:url" content="https://optixweb.space" />
 
-    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <!-- Performance optimizations -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <meta name="theme-color" content="#1e40af">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
-    <!-- Resource hints for critical resources -->
-    <link rel="modulepreload" href="/src/main.tsx">
-    <link rel="modulepreload" href="/src/App.tsx">
   </head>
 
   <body>
-    <!-- Loading screen for better perceived performance -->
-    <div id="loading-screen" class="loading-screen">
-      <div>Caricamento...</div>
-    </div>
-    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Remove loading screen after app loads -->
-    <script>
-      window.addEventListener('load', function() {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-          loadingScreen.classList.add('fade-out');
-          setTimeout(() => loadingScreen.remove(), 300);
-        }
-      });
-    </script>
   </body>
 </html>
