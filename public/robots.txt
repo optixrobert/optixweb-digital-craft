@@ -6,7 +6,7 @@ Disallow: /auth
 Disallow: /admin-login
 
 # Sitemap location
-Sitemap: https://optixweb.it/sitemap.xml
+Sitemap: https://optixweb.space/sitemap.xml
 
 # Crawl delay
 Crawl-delay: 1

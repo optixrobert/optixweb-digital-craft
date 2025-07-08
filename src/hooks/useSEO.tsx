@@ -13,12 +13,12 @@ interface SEOProps {
 }
 
 const DEFAULT_SEO = {
-  title: "Optixweb.it | Web Agency Professionale - Realizzazione Siti Web e Applicazioni",
+  title: "Optixweb.space | Web Agency Professionale - Realizzazione Siti Web e Applicazioni",
   description: "Web agency italiana specializzata in realizzazione siti web professionali, sviluppo applicazioni web custom e consulenza digitale per PMI, startup e professionisti.",
   keywords: "realizzazione siti web, sviluppo applicazioni, web agency Italia, siti web professionali, e-commerce, SEO, UX/UI design, web marketing, consulenza digitale, PMI, startup, WordPress, React, sviluppo custom",
   image: "https://lovable.dev/opengraph-image-p98pqg.png",
   type: "website",
-  url: "https://optixweb.it"
+  url: "https://optixweb.space"
 };
 
 export const useSEO = ({
@@ -31,7 +31,7 @@ export const useSEO = ({
   canonicalUrl,
   structuredData
 }: SEOProps = {}) => {
-  const seoTitle = title ? `${title} | Optixweb.it` : DEFAULT_SEO.title;
+  const seoTitle = title ? `${title} | Optixweb.space` : DEFAULT_SEO.title;
   const seoDescription = description || DEFAULT_SEO.description;
   const seoKeywords = keywords || DEFAULT_SEO.keywords;
   const seoImage = image || DEFAULT_SEO.image;
@@ -43,7 +43,7 @@ export const useSEO = ({
       <title>{seoTitle}</title>
       <meta name="description" content={seoDescription} />
       <meta name="keywords" content={seoKeywords} />
-      <meta name="author" content="Optixweb.it" />
+      <meta name="author" content="Optixweb.space" />
       <meta name="robots" content="index, follow" />
       <meta name="language" content="it-IT" />
       <meta name="geo.region" content="IT" />
@@ -58,7 +58,7 @@ export const useSEO = ({
       <meta property="og:type" content={type} />
       <meta property="og:url" content={seoUrl} />
       <meta property="og:image" content={seoImage} />
-      <meta property="og:site_name" content="Optixweb.it" />
+      <meta property="og:site_name" content="Optixweb.space" />
       <meta property="og:locale" content="it_IT" />
 
       {/* Twitter Card Meta Tags */}
@@ -82,10 +82,10 @@ export const useSEO = ({
 export const createWebsiteStructuredData = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Optixweb.it",
+  "name": "Optixweb.space",
   "description": "Web agency italiana specializzata in realizzazione siti web professionali e sviluppo applicazioni web custom",
-  "url": "https://optixweb.it",
-  "logo": "https://optixweb.it/logo.png",
+  "url": "https://optixweb.space",
+  "logo": "https://optixweb.space/logo.png",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+39-XXX-XXXXXXX",
@@ -120,8 +120,8 @@ export const createServiceStructuredData = (serviceName: string, description: st
   "description": description,
   "provider": {
     "@type": "Organization",
-    "name": "Optixweb.it",
-    "url": "https://optixweb.it"
+    "name": "Optixweb.space",
+    "url": "https://optixweb.space"
   },
   "areaServed": "IT",
   "availableLanguage": "Italian"
