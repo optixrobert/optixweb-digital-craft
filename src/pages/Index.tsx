@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText } from "lucide-react";
+import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -81,6 +82,19 @@ const Index = () => {
     "Tecnologie all'avanguardia",
     "Risultati misurabili",
     "Assistenza post-lancio"
+  ];
+
+  const clients = [
+    { name: "TechCorp", industry: "Tecnologia" },
+    { name: "Fashion House", industry: "Moda" },
+    { name: "Green Energy", industry: "Energia" },
+    { name: "Med Solutions", industry: "Sanità" },
+    { name: "Edu Platform", industry: "Educazione" },
+    { name: "Food & Co", industry: "Ristorazione" },
+    { name: "Real Estate Pro", industry: "Immobiliare" },
+    { name: "Sports Club", industry: "Sport" },
+    { name: "Art Gallery", industry: "Arte" },
+    { name: "Consulting Firm", industry: "Consulenza" }
   ];
 
   return (
@@ -248,6 +262,48 @@ const Index = () => {
           </div>
         </section>
       )}
+
+      {/* Clients Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 lg:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+              Clienti che si fidano di noi
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Aziende di diversi settori ci hanno scelto per la loro trasformazione digitale
+            </p>
+          </div>
+          
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {clients.map((client, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                    <Card className="border-0 shadow-md hover:shadow-lg transition-all duration-300 bg-white">
+                      <CardContent className="flex flex-col items-center justify-center p-8 min-h-[120px]">
+                        <div className="w-12 h-12 bg-gradient-to-r from-optix-blue/10 to-optix-green/10 rounded-full flex items-center justify-center mb-4">
+                          <Building className="h-6 w-6 text-optix-blue" />
+                        </div>
+                        <h3 className="font-semibold text-lg text-center mb-2">{client.name}</h3>
+                        <p className="text-sm text-muted-foreground text-center">{client.industry}</p>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
+          </div>
+        </div>
+      </section>
 
       {/* Why Choose Us Section */}
       <section className="py-20">
