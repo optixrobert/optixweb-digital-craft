@@ -8,6 +8,7 @@ import { GA4Events } from "@/hooks/useGA4";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CalendarBooking from "@/components/CalendarBooking";
 import heroImage from "@/assets/hero-image.jpg";
 
 interface BlogPost {
@@ -371,6 +372,23 @@ const Index = () => {
           </div>
         </section>
       )}
+
+      {/* Consultation Booking Section */}
+      <section className="py-20 bg-gradient-to-br from-optix-blue/5 via-background to-optix-green/5">
+        <div className="container mx-auto px-4 lg:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+              Prenota la tua consulenza gratuita
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Parla direttamente con i nostri esperti per discutere del tuo progetto digitale. 
+              La consulenza è completamente gratuita e senza impegno.
+            </p>
+          </div>
+          
+          <CalendarBooking />
+        </div>
+      </section>
 
       {/* Clients Section */}
       <section className="py-20 bg-muted/30">
