@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building } from "lucide-react";
+import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building, ShoppingCart, Package, Award } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { GA4Events } from "@/hooks/useGA4";
 import { supabase } from "@/integrations/supabase/client";
@@ -96,6 +96,30 @@ const Index = () => {
     { name: "Sports Club", industry: "Sport" },
     { name: "Art Gallery", industry: "Arte" },
     { name: "Consulting Firm", industry: "Consulenza" }
+  ];
+
+  const ecommerceServices = [
+    {
+      icon: ShoppingCart,
+      title: "PrestaShop Partner",
+      description: "Partner ufficiale PrestaShop per e-commerce professionali, moduli personalizzati e integrazioni avanzate.",
+      badge: "Partner Ufficiale",
+      color: "from-blue-500 to-blue-600"
+    },
+    {
+      icon: Package,
+      title: "Shopify Expert",
+      description: "Sviluppo di store Shopify performanti con temi personalizzati e app dedicate per ogni esigenza.",
+      badge: "Expert",
+      color: "from-green-500 to-green-600"
+    },
+    {
+      icon: Code,
+      title: "E-commerce Custom",
+      description: "Piattaforme e-commerce su misura sviluppate con tecnologie moderne per progetti complessi.",
+      badge: "Personalizzato",
+      color: "from-optix-blue to-optix-green"
+    }
   ];
 
   return (
@@ -195,6 +219,71 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* E-commerce Section */}
+      <section className="py-20 bg-gradient-to-br from-background to-optix-light/20">
+        <div className="container mx-auto px-4 lg:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+              Soluzioni E-commerce di Eccellenza
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Partner ufficiali delle migliori piattaforme e-commerce. Realizziamo store online 
+              performanti e ottimizzati per le vendite.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {ecommerceServices.map((service, index) => (
+              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white relative overflow-hidden group">
+                <div className="absolute top-4 right-4">
+                  <span className={`inline-flex items-center px-2 py-1 text-xs font-medium text-white rounded-full bg-gradient-to-r ${service.color}`}>
+                    <Award className="w-3 h-3 mr-1" />
+                    {service.badge}
+                  </span>
+                </div>
+                
+                <CardContent className="p-8 pt-12">
+                  <div className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <service.icon className="h-8 w-8 text-white" />
+                  </div>
+                  
+                  <h3 className="font-bold text-xl mb-4 group-hover:text-optix-blue transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-muted-foreground leading-relaxed">
+                    {service.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="bg-gradient-to-r from-optix-blue/10 to-optix-green/10 rounded-2xl p-8 md:p-12 text-center">
+            <div className="max-w-3xl mx-auto">
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                Hai bisogno di un e-commerce su misura?
+              </h3>
+              <p className="text-lg text-muted-foreground mb-8">
+                Analizziamo le tue esigenze e ti proponiamo la soluzione e-commerce più adatta al tuo business, 
+                con integrazioni avanzate e funzionalità personalizzate.
+              </p>
+              <Button 
+                asChild 
+                size="lg" 
+                className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white"
+                onClick={() => GA4Events.ctaClick('consulenza_ecommerce', 'ecommerce_section')}
+              >
+                <Link to="/contatti">
+                  Richiedi una consulenza e-commerce
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
