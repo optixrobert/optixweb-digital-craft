@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building, ShoppingCart, Package, Award } from "lucide-react";
+import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building, ShoppingCart, Package, Award, Globe } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { GA4Events } from "@/hooks/useGA4";
 import { supabase } from "@/integrations/supabase/client";
@@ -112,6 +112,13 @@ const Index = () => {
       description: "Sviluppo di store Shopify performanti con temi personalizzati e app dedicate per ogni esigenza.",
       badge: "Expert",
       color: "from-green-500 to-green-600"
+    },
+    {
+      icon: Globe,
+      title: "WooCommerce Pro",
+      description: "E-commerce WordPress con WooCommerce, plugin personalizzati e ottimizzazioni per massime performance.",
+      badge: "Specializzati",
+      color: "from-purple-500 to-purple-600"
     },
     {
       icon: Code,
@@ -236,7 +243,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {ecommerceServices.map((service, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white relative overflow-hidden group">
                 <div className="absolute top-4 right-4">
