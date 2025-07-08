@@ -93,7 +93,7 @@ const Contatti = () => {
     {
       icon: Mail,
       title: "Email",
-      content: "info@optixweb.it",
+      content: "info@optixweb.space",
       description: "Scrivici per qualsiasi informazione"
     },
     {
@@ -147,9 +147,9 @@ const Contatti = () => {
 
   const seoComponent = useSEO({
     title: "Contatti - Richiedi un Preventivo Gratuito",
-    description: "Contatta Optixweb.it per un preventivo gratuito. Siamo a tua disposizione per realizzare il tuo progetto web: siti, e-commerce, applicazioni e consulenza digitale.",
+    description: "Contatta Optixweb.space per un preventivo gratuito. Siamo a tua disposizione per realizzare il tuo progetto web: siti, e-commerce, applicazioni e consulenza digitale.",
     keywords: "contatti web agency, preventivo sito web, richiesta preventivo gratuito, consulenza web, contatto sviluppatori web Italia",
-    canonicalUrl: "https://optixweb.it/contatti"
+    canonicalUrl: "https://optixweb.space/contatti"
   });
 
   return (
@@ -351,7 +351,7 @@ const Contatti = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" variant="secondary" className="bg-white text-optix-blue hover:bg-white/90">
-              <a href="mailto:info@optixweb.it">
+              <a href="mailto:info@optixweb.space">
                 <Mail className="mr-2 h-4 w-4" />
                 Scrivici subito
               </a>

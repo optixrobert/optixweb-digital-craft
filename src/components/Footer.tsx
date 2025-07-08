@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="md:col-span-1">
             <div className="text-2xl font-bold bg-gradient-to-r from-optix-blue to-optix-green bg-clip-text text-transparent mb-4">
-              Optixweb.it
+              Optixweb.space
             </div>
             <p className="text-gray-300 mb-4">
               La tua web agency di fiducia per soluzioni digitali professionali e innovative.
@@ -21,7 +21,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-300">
                 <Mail size={16} />
-                <span>info@optixweb.it</span>
+                <span>info@optixweb.space</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-300">
                 <Phone size={16} />

@@ -10,9 +10,9 @@ import { useSEO, createServiceStructuredData } from "@/hooks/useSEO";
 const Servizi = () => {
   const seoComponent = useSEO({
     title: "Servizi Web Agency",
-    description: "Scopri tutti i servizi di Optixweb.it: realizzazione siti web, e-commerce, applicazioni web, SEO, UX/UI design e consulenza digitale per far crescere la tua attività online.",
+    description: "Scopri tutti i servizi di Optixweb.space: realizzazione siti web, e-commerce, applicazioni web, SEO, UX/UI design e consulenza digitale per far crescere la tua attività online.",
     keywords: "servizi web agency, realizzazione siti web, e-commerce, sviluppo applicazioni, SEO professionale, UX/UI design, web marketing, consulenza digitale, manutenzione siti web",
-    canonicalUrl: "https://optixweb.it/servizi",
+    canonicalUrl: "https://optixweb.space/servizi",
     structuredData: createServiceStructuredData("Servizi Web Agency", "Servizi completi di web agency per la tua presenza digitale")
   });
 

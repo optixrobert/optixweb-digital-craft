@@ -29,9 +29,9 @@ const Index = () => {
   
   const seoComponent = useSEO({
     title: "Web Agency Professionale",
-    description: "Optixweb.it è la web agency italiana leader nella realizzazione di siti web professionali, e-commerce e applicazioni web custom. Trasformiamo le tue idee in soluzioni digitali vincenti.",
+    description: "Optixweb.space è la web agency italiana leader nella realizzazione di siti web professionali, e-commerce e applicazioni web custom. Trasformiamo le tue idee in soluzioni digitali vincenti.",
     keywords: "web agency Italia, realizzazione siti web, e-commerce, sviluppo applicazioni, SEO, digital marketing, consulenza web, siti responsive, WordPress, React",
-    canonicalUrl: "https://optixweb.it",
+    canonicalUrl: "https://optixweb.space",
     structuredData: createWebsiteStructuredData()
   });
 

@@ -6,9 +6,9 @@ import { useSEO } from "@/hooks/useSEO";
 const Prenota = () => {
   const seoComponent = useSEO({
     title: "Prenota Consulenza Gratuita",
-    description: "Prenota una consulenza gratuita con gli esperti di Optixweb.it. Parliamo del tuo progetto web e troviamo insieme la soluzione digitale perfetta per te.",
+    description: "Prenota una consulenza gratuita con gli esperti di Optixweb.space. Parliamo del tuo progetto web e troviamo insieme la soluzione digitale perfetta per te.",
     keywords: "consulenza gratuita web, prenotazione consulenza, consulenza digitale gratuita, meeting web agency, appuntamento sviluppo web",
-    canonicalUrl: "https://optixweb.it/prenota"
+    canonicalUrl: "https://optixweb.space/prenota"
   });
 
   return (

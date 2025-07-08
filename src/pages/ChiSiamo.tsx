@@ -10,9 +10,9 @@ import teamImage from "@/assets/team-image.jpg";
 const ChiSiamo = () => {
   const seoComponent = useSEO({
     title: "Chi Siamo - Web Agency Italiana",
-    description: "Scopri il team di Optixweb.it: professionisti appassionati con oltre 5 anni di esperienza nella realizzazione di siti web e applicazioni digitali innovative.",
+    description: "Scopri il team di Optixweb.space: professionisti appassionati con oltre 5 anni di esperienza nella realizzazione di siti web e applicazioni digitali innovative.",
     keywords: "chi siamo web agency, team sviluppatori web, esperienza web design, professionisti digitali Italia, agenzia web italiana",
-    canonicalUrl: "https://optixweb.it/chi-siamo"
+    canonicalUrl: "https://optixweb.space/chi-siamo"
   });
 
   const values = [

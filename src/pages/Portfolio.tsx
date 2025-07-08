@@ -14,9 +14,9 @@ const Portfolio = () => {
   
   const seoComponent = useSEO({
     title: "Portfolio - Progetti Realizzati",
-    description: "Scopri i progetti web realizzati da Optixweb.it: siti web professionali, e-commerce di successo e applicazioni web innovative per clienti in tutta Italia.",
+    description: "Scopri i progetti web realizzati da Optixweb.space: siti web professionali, e-commerce di successo e applicazioni web innovative per clienti in tutta Italia.",
     keywords: "portfolio web agency, progetti siti web, esempi e-commerce, casi studio web, realizzazioni web professionali, siti web Italia",
-    canonicalUrl: "https://optixweb.it/portfolio"
+    canonicalUrl: "https://optixweb.space/portfolio"
   });
 
   const categories = [

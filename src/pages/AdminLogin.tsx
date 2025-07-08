@@ -117,7 +117,7 @@ export default function AdminLogin() {
                 <Input
                   id="admin-email"
                   type="email"
-                  placeholder="admin@optixweb.it"
+                  placeholder="admin@optixweb.space"
                   {...form.register('email')}
                   disabled={isLoading}
                 />
