@@ -47,7 +47,7 @@ const Header = () => {
 
           <div className="hidden md:flex items-center space-x-4">
             <Button asChild variant="outline" className="border-optix-blue text-optix-blue hover:bg-optix-light">
-              <Link to="/contatti">Consulenza Gratuita</Link>
+              <Link to="/prenota">Consulenza Gratuita</Link>
             </Button>
           </div>
 
@@ -83,7 +83,7 @@ const Header = () => {
               ))}
               <div className="pt-4">
                 <Button asChild variant="outline" className="w-full border-optix-blue text-optix-blue hover:bg-optix-light">
-                  <Link to="/contatti" onClick={() => setIsMenuOpen(false)}>
+                  <Link to="/prenota" onClick={() => setIsMenuOpen(false)}>
                     Consulenza Gratuita
                   </Link>
                 </Button>

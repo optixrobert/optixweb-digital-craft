@@ -11,6 +11,7 @@ import ChiSiamo from "./pages/ChiSiamo";
 import Servizi from "./pages/Servizi";
 import Portfolio from "./pages/Portfolio";
 import Contatti from "./pages/Contatti";
+import Prenota from "./pages/Prenota";
 import Auth from "./pages/Auth";
 import AdminLogin from "./pages/AdminLogin";
 import AreaClienti from "./pages/AreaClienti";
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/servizi" element={<Servizi />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contatti" element={<Contatti />} />
+              <Route path="/prenota" element={<Prenota />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/area-clienti" element={<AreaClienti />} />
