@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Clock, Send, MessageCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -19,25 +20,65 @@ const Contatti = () => {
     servizio: "",
     messaggio: ""
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simulazione invio form
-    toast({
-      title: "Messaggio inviato!",
-      description: "Ti contatteremo entro 24 ore per la tua consulenza gratuita.",
-    });
-    
-    // Reset form
-    setFormData({
-      nome: "",
-      email: "",
-      telefono: "",
-      azienda: "",
-      servizio: "",
-      messaggio: ""
-    });
+    if (!formData.nome || !formData.email || !formData.messaggio) {
+      toast({
+        title: "Campi mancanti",
+        description: "Per favore compila tutti i campi obbligatori",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Salva nel database
+      const { error } = await supabase
+        .from('contact_requests')
+        .insert([
+          {
+            nome: formData.nome,
+            email: formData.email,
+            telefono: formData.telefono,
+            azienda: formData.azienda,
+            servizio: formData.servizio,
+            messaggio: formData.messaggio,
+            status: 'new'
+          }
+        ]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Messaggio inviato!",
+        description: "Ti contatteremo entro 24 ore per la tua consulenza gratuita.",
+      });
+      
+      // Reset form
+      setFormData({
+        nome: "",
+        email: "",
+        telefono: "",
+        azienda: "",
+        servizio: "",
+        messaggio: ""
+      });
+
+    } catch (error) {
+      console.error('Error submitting contact request:', error);
+      toast({
+        title: "Errore",
+        description: "Si è verificato un errore. Riprova più tardi o contattaci direttamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -242,10 +283,11 @@ const Contatti = () => {
                     <Button 
                       type="submit" 
                       size="lg" 
+                      disabled={isLoading}
                       className="w-full bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white"
                     >
                       <Send className="mr-2 h-4 w-4" />
-                      Invia richiesta
+                      {isLoading ? "Invio in corso..." : "Invia richiesta"}
                     </Button>
                   </form>
                 </CardContent>

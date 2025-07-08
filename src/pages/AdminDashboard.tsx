@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, Users, Ticket, AlertCircle, CheckCircle, FileText, Plus, Edit, Trash2 } from 'lucide-react';
+import { LogOut, Users, Ticket, AlertCircle, CheckCircle, FileText, Plus, Edit, Trash2, Mail, MessageSquare } from 'lucide-react';
 import BlogPostDialog from '@/components/BlogPostDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -71,6 +71,33 @@ interface BlogPost {
   };
 }
 
+interface ContactRequest {
+  id: string;
+  nome: string;
+  email: string;
+  telefono: string | null;
+  azienda: string | null;
+  servizio: string | null;
+  messaggio: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ConsultationRequest {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  company: string | null;
+  consultation_date: string;
+  consultation_time: string;
+  consultation_type: string;
+  message: string | null;
+  status: string;
+  created_at: string;
+}
+
 const statusColors = {
   open: 'bg-blue-100 text-blue-800',
   in_progress: 'bg-yellow-100 text-yellow-800',
@@ -93,6 +120,8 @@ export default function AdminDashboard() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [contactRequests, setContactRequests] = useState<ContactRequest[]>([]);
+  const [consultationRequests, setConsultationRequests] = useState<ConsultationRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showBlogDialog, setShowBlogDialog] = useState(false);
@@ -131,7 +160,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [ticketsResponse, profilesResponse, subscribersResponse, blogResponse] = await Promise.all([
+      const [ticketsResponse, profilesResponse, subscribersResponse, blogResponse, contactResponse, consultationResponse] = await Promise.all([
         supabase
           .from('tickets')
           .select(`
@@ -153,6 +182,14 @@ export default function AdminDashboard() {
             *,
             profiles!blog_posts_author_id_fkey(email, first_name, last_name)
           `)
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('contact_requests')
+          .select('*')
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('consultation_requests')
+          .select('*')
           .order('created_at', { ascending: false })
       ]);
 
@@ -160,11 +197,15 @@ export default function AdminDashboard() {
       if (profilesResponse.error) throw profilesResponse.error;
       if (subscribersResponse.error) throw subscribersResponse.error;
       if (blogResponse.error) throw blogResponse.error;
+      if (contactResponse.error) throw contactResponse.error;
+      if (consultationResponse.error) throw consultationResponse.error;
 
       setTickets((ticketsResponse.data as TicketWithProfile[]) || []);
       setProfiles(profilesResponse.data || []);
       setSubscribers(subscribersResponse.data || []);
       setBlogPosts((blogResponse.data as BlogPost[]) || []);
+      setContactRequests(contactResponse.data || []);
+      setConsultationRequests(consultationResponse.data || []);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast({
@@ -376,12 +417,132 @@ export default function AdminDashboard() {
             </Card>
           </div>
 
-          <Tabs defaultValue="blog" className="space-y-6">
+          <Tabs defaultValue="contacts" className="space-y-6">
             <TabsList>
+              <TabsTrigger value="contacts">Richieste di Contatto</TabsTrigger>
+              <TabsTrigger value="consultations">Consulenze</TabsTrigger>
               <TabsTrigger value="blog">Gestione Blog</TabsTrigger>
               <TabsTrigger value="subscribers">Abbonamenti</TabsTrigger>
               <TabsTrigger value="tickets">Ticket Support</TabsTrigger>
             </TabsList>
+
+            {/* Contact Requests */}
+            <TabsContent value="contacts">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Mail className="h-5 w-5" />
+                    Richieste di Contatto
+                  </CardTitle>
+                  <CardDescription>
+                    Visualizza tutte le richieste di contatto inviate dal modulo
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nome</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Azienda</TableHead>
+                        <TableHead>Servizio</TableHead>
+                        <TableHead>Messaggio</TableHead>
+                        <TableHead>Data</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {contactRequests.map((request) => (
+                        <TableRow key={request.id}>
+                          <TableCell>
+                            <div>
+                              <div className="font-semibold">{request.nome}</div>
+                              {request.telefono && (
+                                <div className="text-sm text-muted-foreground">{request.telefono}</div>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>{request.email}</TableCell>
+                          <TableCell>{request.azienda || '-'}</TableCell>
+                          <TableCell>{request.servizio || '-'}</TableCell>
+                          <TableCell>
+                            <div className="max-w-xs truncate" title={request.messaggio}>
+                              {request.messaggio}
+                            </div>
+                          </TableCell>
+                          <TableCell>{formatDate(request.created_at)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Consultation Requests */}
+            <TabsContent value="consultations">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <MessageSquare className="h-5 w-5" />
+                    Richieste di Consulenza
+                  </CardTitle>
+                  <CardDescription>
+                    Visualizza tutte le richieste di consulenza con calendario
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nome</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Tipo Consulenza</TableHead>
+                        <TableHead>Data & Ora</TableHead>
+                        <TableHead>Messaggio</TableHead>
+                        <TableHead>Data Richiesta</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {consultationRequests.map((request) => (
+                        <TableRow key={request.id}>
+                          <TableCell>
+                            <div>
+                              <div className="font-semibold">{request.name}</div>
+                              {request.phone && (
+                                <div className="text-sm text-muted-foreground">{request.phone}</div>
+                              )}
+                              {request.company && (
+                                <div className="text-sm text-muted-foreground">{request.company}</div>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>{request.email}</TableCell>
+                          <TableCell>{request.consultation_type}</TableCell>
+                          <TableCell>
+                            <div>
+                              <div className="font-medium">
+                                {new Date(request.consultation_date).toLocaleDateString('it-IT')}
+                              </div>
+                              <div className="text-sm text-muted-foreground">
+                                {request.consultation_time}
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            {request.message && (
+                              <div className="max-w-xs truncate" title={request.message}>
+                                {request.message}
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell>{formatDate(request.created_at)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
             {/* Blog Management */}
             <TabsContent value="blog">

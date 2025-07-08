@@ -118,6 +118,45 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_requests: {
+        Row: {
+          azienda: string | null
+          created_at: string
+          email: string
+          id: string
+          messaggio: string
+          nome: string
+          servizio: string | null
+          status: string
+          telefono: string | null
+          updated_at: string
+        }
+        Insert: {
+          azienda?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          messaggio: string
+          nome: string
+          servizio?: string | null
+          status?: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Update: {
+          azienda?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          messaggio?: string
+          nome?: string
+          servizio?: string | null
+          status?: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           company: string | null
