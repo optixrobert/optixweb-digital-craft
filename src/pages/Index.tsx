@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { GA4Events } from "@/hooks/useGA4";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -121,13 +122,24 @@ const Index = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white"
+                  onClick={() => GA4Events.ctaClick('prenota_consulenza', 'hero')}
+                >
                   <Link to="/contatti">
                     Prenota una consulenza gratuita
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-optix-blue text-optix-blue hover:bg-optix-light">
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-optix-blue text-optix-blue hover:bg-optix-light"
+                  onClick={() => GA4Events.navigationClick('portfolio')}
+                >
                   <Link to="/portfolio">
                     Vedi i nostri progetti
                   </Link>
@@ -240,6 +252,7 @@ const Index = () => {
                       variant="ghost" 
                       className="p-0 h-auto text-optix-blue hover:text-optix-blue/80 hover:bg-transparent group/btn"
                       asChild
+                      onClick={() => GA4Events.blogPostRead(post.title)}
                     >
                       <Link to={`/blog/${post.slug}`}>
                         Leggi l'articolo
@@ -377,7 +390,13 @@ const Index = () => {
             Contattaci oggi per una consulenza gratuita e scopri come possiamo 
             aiutarti a raggiungere i tuoi obiettivi digitali.
           </p>
-          <Button asChild size="lg" variant="secondary" className="bg-white text-optix-blue hover:bg-white/90">
+          <Button 
+            asChild 
+            size="lg" 
+            variant="secondary" 
+            className="bg-white text-optix-blue hover:bg-white/90"
+            onClick={() => GA4Events.ctaClick('inizia_progetto', 'footer_cta')}
+          >
             <Link to="/contatti">
               Inizia il tuo progetto
               <ArrowRight className="ml-2 h-4 w-4" />
