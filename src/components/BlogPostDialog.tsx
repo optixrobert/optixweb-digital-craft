@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -60,17 +60,46 @@ export default function BlogPostDialog({ open, onOpenChange, post, onSuccess }: 
   const form = useForm<BlogPostFormData>({
     resolver: zodResolver(blogPostSchema),
     defaultValues: {
-      title: post?.title || '',
-      content: post?.content || '',
-      excerpt: post?.excerpt || '',
-      slug: post?.slug || '',
-      featuredImageUrl: post?.featured_image_url || '',
-      metaTitle: post?.meta_title || '',
-      metaDescription: post?.meta_description || '',
-      tags: post?.tags?.join(', ') || '',
-      published: post?.published || false,
+      title: '',
+      content: '',
+      excerpt: '',
+      slug: '',
+      featuredImageUrl: '',
+      metaTitle: '',
+      metaDescription: '',
+      tags: '',
+      published: false,
     },
   });
+
+  // Aggiorna i valori del form quando il post cambia
+  useEffect(() => {
+    if (post) {
+      form.reset({
+        title: post.title,
+        content: post.content,
+        excerpt: post.excerpt || '',
+        slug: post.slug,
+        featuredImageUrl: post.featured_image_url || '',
+        metaTitle: post.meta_title || '',
+        metaDescription: post.meta_description || '',
+        tags: post.tags?.join(', ') || '',
+        published: post.published,
+      });
+    } else {
+      form.reset({
+        title: '',
+        content: '',
+        excerpt: '',
+        slug: '',
+        featuredImageUrl: '',
+        metaTitle: '',
+        metaDescription: '',
+        tags: '',
+        published: false,
+      });
+    }
+  }, [post, form]);
 
   const generateSlug = (title: string) => {
     return title
@@ -83,7 +112,7 @@ export default function BlogPostDialog({ open, onOpenChange, post, onSuccess }: 
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .trim('-');
+      .trim();
   };
 
   const handleTitleChange = (title: string) => {
