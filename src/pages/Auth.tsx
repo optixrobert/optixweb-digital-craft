@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -45,9 +46,30 @@ export default function Auth() {
   });
 
   useEffect(() => {
-    if (user) {
-      navigate('/area-clienti');
-    }
+    const checkUserAndRedirect = async () => {
+      if (user) {
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('is_admin')
+            .eq('user_id', user.id)
+            .single();
+
+          if (error) throw error;
+          
+          if (data?.is_admin) {
+            navigate('/admin');
+          } else {
+            navigate('/area-clienti');
+          }
+        } catch (error) {
+          console.error('Error checking admin status:', error);
+          navigate('/area-clienti');
+        }
+      }
+    };
+
+    checkUserAndRedirect();
   }, [user, navigate]);
 
   const handleSignIn = async (data: SignInFormData) => {
