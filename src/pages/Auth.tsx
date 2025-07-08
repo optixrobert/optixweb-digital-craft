@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -46,35 +45,11 @@ export default function Auth() {
   });
 
   useEffect(() => {
-    const checkUserAndRedirect = async () => {
-      if (user) {
-        console.log('User logged in:', user.id, user.email);
-        try {
-          const { data, error } = await supabase
-            .from('profiles')
-            .select('is_admin')
-            .eq('user_id', user.id)
-            .single();
-
-          console.log('Profile query result:', data, error);
-
-          if (error) throw error;
-          
-          if (data?.is_admin) {
-            console.log('User is admin, redirecting to /admin');
-            navigate('/admin');
-          } else {
-            console.log('User is not admin, redirecting to /area-clienti');
-            navigate('/area-clienti');
-          }
-        } catch (error) {
-          console.error('Error checking admin status:', error);
-          navigate('/area-clienti');
-        }
-      }
-    };
-
-    checkUserAndRedirect();
+    // Redirect normal users to area-clienti after login
+    if (user) {
+      console.log('Normal login - User logged in:', user.id, user.email);
+      navigate('/area-clienti');
+    }
   }, [user, navigate]);
 
   const handleSignIn = async (data: SignInFormData) => {
