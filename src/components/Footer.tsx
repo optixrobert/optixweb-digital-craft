@@ -17,7 +17,7 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-gray-300">
                 <MapPin size={16} />
-                <span>Italia</span>
+                <span>Via Tenente Losco 18, 80040 Poggiomarino (NA)</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-300">
                 <Mail size={16} />
@@ -94,9 +94,10 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-300 text-sm">
-            © 2024 Optixweb.it. Tutti i diritti riservati.
-          </p>
+          <div className="text-gray-300 text-sm text-center md:text-left">
+            <p>© 2024 AR Group di Peluso Roberto</p>
+            <p>P.IVA: 08779461212</p>
+          </div>
           <div className="flex gap-6 mt-4 md:mt-0">
             <Link to="/privacy" className="text-gray-300 hover:text-optix-blue text-sm transition-colors">
               Privacy Policy
