@@ -8,7 +8,7 @@ import { GA4Events } from "@/hooks/useGA4";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
+import { useSEO, createWebsiteStructuredData } from "@/hooks/useSEO";
 import heroImage from "@/assets/hero-image.jpg";
 
 interface BlogPost {
@@ -26,6 +26,14 @@ interface BlogPost {
 
 const Index = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  
+  const seoComponent = useSEO({
+    title: "Web Agency Professionale",
+    description: "Optixweb.it è la web agency italiana leader nella realizzazione di siti web professionali, e-commerce e applicazioni web custom. Trasformiamo le tue idee in soluzioni digitali vincenti.",
+    keywords: "web agency Italia, realizzazione siti web, e-commerce, sviluppo applicazioni, SEO, digital marketing, consulenza web, siti responsive, WordPress, React",
+    canonicalUrl: "https://optixweb.it",
+    structuredData: createWebsiteStructuredData()
+  });
 
   useEffect(() => {
     const fetchLatestPosts = async () => {
@@ -132,6 +140,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {seoComponent}
       <Header />
       
       {/* Hero Section */}

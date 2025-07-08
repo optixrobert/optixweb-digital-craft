@@ -4,9 +4,17 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Users, Target, Lightbulb, Heart } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useSEO } from "@/hooks/useSEO";
 import teamImage from "@/assets/team-image.jpg";
 
 const ChiSiamo = () => {
+  const seoComponent = useSEO({
+    title: "Chi Siamo - Web Agency Italiana",
+    description: "Scopri il team di Optixweb.it: professionisti appassionati con oltre 5 anni di esperienza nella realizzazione di siti web e applicazioni digitali innovative.",
+    keywords: "chi siamo web agency, team sviluppatori web, esperienza web design, professionisti digitali Italia, agenzia web italiana",
+    canonicalUrl: "https://optixweb.it/chi-siamo"
+  });
+
   const values = [
     {
       icon: Users,
@@ -50,6 +58,7 @@ const ChiSiamo = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {seoComponent}
       <Header />
       
       {/* Hero Section */}

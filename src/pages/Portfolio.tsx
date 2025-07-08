@@ -6,10 +6,18 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ExternalLink, Code, ShoppingCart, Palette, Monitor } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useSEO } from "@/hooks/useSEO";
 import portfolioShowcase from "@/assets/portfolio-showcase.jpg";
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState("tutti");
+  
+  const seoComponent = useSEO({
+    title: "Portfolio - Progetti Realizzati",
+    description: "Scopri i progetti web realizzati da Optixweb.it: siti web professionali, e-commerce di successo e applicazioni web innovative per clienti in tutta Italia.",
+    keywords: "portfolio web agency, progetti siti web, esempi e-commerce, casi studio web, realizzazioni web professionali, siti web Italia",
+    canonicalUrl: "https://optixweb.it/portfolio"
+  });
 
   const categories = [
     { id: "tutti", name: "Tutti i progetti", icon: Monitor },
@@ -88,6 +96,7 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {seoComponent}
       <Header />
       
       {/* Hero Section */}

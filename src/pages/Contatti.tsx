@@ -9,6 +9,7 @@ import { Mail, Phone, MapPin, Clock, Send, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useSEO } from "@/hooks/useSEO";
 
 const Contatti = () => {
   const { toast } = useToast();
@@ -144,8 +145,16 @@ const Contatti = () => {
     }
   ];
 
+  const seoComponent = useSEO({
+    title: "Contatti - Richiedi un Preventivo Gratuito",
+    description: "Contatta Optixweb.it per un preventivo gratuito. Siamo a tua disposizione per realizzare il tuo progetto web: siti, e-commerce, applicazioni e consulenza digitale.",
+    keywords: "contatti web agency, preventivo sito web, richiesta preventivo gratuito, consulenza web, contatto sviluppatori web Italia",
+    canonicalUrl: "https://optixweb.it/contatti"
+  });
+
   return (
     <div className="min-h-screen bg-background">
+      {seoComponent}
       <Header />
       
       {/* Hero Section */}

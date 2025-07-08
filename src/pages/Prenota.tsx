@@ -1,10 +1,19 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CalendarBooking from "@/components/CalendarBooking";
+import { useSEO } from "@/hooks/useSEO";
 
 const Prenota = () => {
+  const seoComponent = useSEO({
+    title: "Prenota Consulenza Gratuita",
+    description: "Prenota una consulenza gratuita con gli esperti di Optixweb.it. Parliamo del tuo progetto web e troviamo insieme la soluzione digitale perfetta per te.",
+    keywords: "consulenza gratuita web, prenotazione consulenza, consulenza digitale gratuita, meeting web agency, appuntamento sviluppo web",
+    canonicalUrl: "https://optixweb.it/prenota"
+  });
+
   return (
     <div className="min-h-screen bg-background">
+      {seoComponent}
       <Header />
       
       {/* Hero Section */}

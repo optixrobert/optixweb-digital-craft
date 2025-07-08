@@ -1,14 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /area-clienti
+Disallow: /auth
+Disallow: /admin-login
+
+# Sitemap location
+Sitemap: https://optixweb.it/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Specific directives for major crawlers
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: *
-Allow: /
+Crawl-delay: 1
