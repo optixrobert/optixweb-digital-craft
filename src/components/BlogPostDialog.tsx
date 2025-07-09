@@ -186,7 +186,7 @@ export default function BlogPostDialog({ open, onOpenChange, post, onSuccess }: 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl max-h-[95vh] overflow-hidden">
+      <DialogContent className="max-w-6xl max-h-[95vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
@@ -197,7 +197,7 @@ export default function BlogPostDialog({ open, onOpenChange, post, onSuccess }: 
           </DialogDescription>
         </DialogHeader>
 
-        <div className="overflow-y-auto">
+        <div className="flex-1 overflow-y-auto min-h-0">
           <Tabs defaultValue="content" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="content" className="flex items-center gap-2">
