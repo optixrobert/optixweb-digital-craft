@@ -27,21 +27,21 @@ const BandiDigitali = () => {
     },
     {
       title: "Voucher Digitalizzazione PMI",
-      description: "Contributi per consulenze digitali e sviluppo software",
+      description: "Contributi per e-commerce, siti web e app mobile",
       amount: "€10.000",
-      fondoPerduto: "50%",
-      scadenza: "30 Novembre 2024", 
+      fondoPerduto: "70%",
+      scadenza: "Domande sempre aperte", 
       status: "Attivo",
       link: "/bandi-digitali/voucher-digitalizzazione"
     },
     {
-      title: "Transizione 4.0",
-      description: "Credito d'imposta per investimenti in tecnologie digitali",
-      amount: "€500.000",
-      fondoPerduto: "Credito d'imposta",
-      scadenza: "Permanente",
+      title: "Credito d'Imposta Formazione 4.0",
+      description: "Credito fiscale per corsi di formazione digitale",
+      amount: "€300.000",
+      fondoPerduto: "70% credito",
+      scadenza: "Corsi sempre disponibili",
       status: "Attivo",
-      link: "/bandi-digitali/transizione-40"
+      link: "/bandi-digitali/credito-imposta-formazione"
     }
   ];
 
