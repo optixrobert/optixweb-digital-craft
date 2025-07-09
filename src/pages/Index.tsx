@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building, ShoppingCart, Package, Award, Globe } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Code, Palette, Search, Zap, CheckCircle, Star, Calendar, FileText, Building, ShoppingCart, Package, Award, Globe, Users, TrendingUp, Clock, MessageCircle } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { GA4Events } from "@/hooks/useGA4";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ClientsSection from "@/components/ClientsSection";
+import { AuditRequestForm } from "@/components/AuditRequestForm";
 import { useSEO, createWebsiteStructuredData } from "@/hooks/useSEO";
 import heroImage from "@/assets/hero-image.jpg";
 
@@ -144,69 +146,74 @@ const Index = () => {
       {seoComponent}
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-optix-light via-background to-optix-light py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-optix-blue/5 to-optix-green/5"></div>
-        <div className="container mx-auto px-4 lg:px-6 relative">
+      {/* Hero Section with updated value proposition */}
+      <section className="relative py-20 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+        <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                  <span className="bg-gradient-to-r from-optix-blue to-optix-light-blue bg-clip-text text-transparent">
-                    Developer Agency
-                  </span>{" "}
-                  per agenzie e clienti finali
+                <Badge variant="outline" className="text-sm font-medium border-primary/20">
+                  🚀 40 Esperti Web • 12 Anni di Esperienza
+                </Badge>
+                <h1 className="text-4xl lg:text-6xl font-bold leading-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  Trasformiamo il tuo sito web in una macchina di vendita
                 </h1>
-                <p className="text-xl text-muted-foreground max-w-xl">
-                  Partner tecnologico specializzato nello sviluppo di soluzioni digitali per agenzie web e clienti finali. 
-                  Trasformiamo progetti complessi in realtà digitali performanti.
+                <p className="text-xl text-muted-foreground leading-relaxed">
+                  Risultati garantiti per aziende italiane. Più di 200 PMI hanno triplicato le vendite online con i nostri siti web ottimizzati per la conversione.
                 </p>
               </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="bg-gradient-to-r from-optix-blue to-optix-light-blue hover:from-optix-blue/90 hover:to-optix-light-blue/90 text-white"
-                  onClick={() => GA4Events.ctaClick('prenota_consulenza', 'hero')}
-                >
-                  <Link to="/contatti">
-                    Prenota una consulenza gratuita
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-optix-blue text-optix-blue hover:bg-optix-light"
-                  onClick={() => GA4Events.navigationClick('portfolio')}
-                >
-                  <Link to="/portfolio">
-                    Vedi i nostri progetti
-                  </Link>
-                </Button>
+
+              {/* Stats */}
+              <div className="flex flex-wrap gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-primary" />
+                  <span><strong>40+</strong> Esperti Web</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-primary" />
+                  <span><strong>12 anni</strong> di esperienza</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-primary" />
+                  <span><strong>200+</strong> aziende servite</span>
+                </div>
               </div>
 
-              <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-                <div className="flex items-center space-x-1">
-                  <Star className="h-4 w-4 text-optix-green" />
-                  <span>100+ progetti completati</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <CheckCircle className="h-4 w-4 text-optix-green" />
-                  <span>Clienti soddisfatti</span>
-                </div>
+              {/* Value Proposition */}
+              <Card className="border-primary/20 bg-primary/5">
+                <CardContent className="p-6">
+                  <p className="text-lg leading-relaxed">
+                    <strong>Audit Gratuito:</strong> Analizza il tuo sito web e scopri come aumentare le conversioni del 150% in 6 mesi
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild size="lg" className="text-lg px-8 py-3">
+                  <a href="#audit-form">
+                    Scarica Audit Gratuito
+                    <TrendingUp className="w-5 h-5 ml-2" />
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="text-lg px-8 py-3">
+                  <a href="https://wa.me/393451234567?text=Ciao!%20Vorrei%20parlare%20dei%20vostri%20servizi%20web" target="_blank">
+                    Parla con WhatsApp
+                    <MessageCircle className="w-5 h-5 ml-2" />
+                  </a>
+                </Button>
               </div>
             </div>
-            
-            <div className="relative">
-              <img 
-                src={heroImage} 
-                alt="Optixweb - Web Agency Professionale" 
-                className="rounded-2xl shadow-2xl"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-optix-blue/20 to-transparent rounded-2xl"></div>
+
+            {/* Right Column - Form */}
+            <div className="lg:pl-8">
+              <div id="audit-form">
+                <AuditRequestForm 
+                  sourceChannel="homepage"
+                  landingPage="homepage"
+                  variant="default"
+                />
+              </div>
             </div>
           </div>
         </div>

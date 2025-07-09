@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_requests: {
+        Row: {
+          azienda: string
+          conversion_date: string | null
+          created_at: string
+          follow_up_date: string | null
+          follow_up_sent: boolean | null
+          fonte_traffico: string | null
+          id: string
+          landing_page: string | null
+          nome: string
+          obiettivo_principale: string
+          status: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          azienda: string
+          conversion_date?: string | null
+          created_at?: string
+          follow_up_date?: string | null
+          follow_up_sent?: boolean | null
+          fonte_traffico?: string | null
+          id?: string
+          landing_page?: string | null
+          nome: string
+          obiettivo_principale: string
+          status?: string
+          updated_at?: string
+          whatsapp: string
+        }
+        Update: {
+          azienda?: string
+          conversion_date?: string | null
+          created_at?: string
+          follow_up_date?: string | null
+          follow_up_sent?: boolean | null
+          fonte_traffico?: string | null
+          id?: string
+          landing_page?: string | null
+          nome?: string
+          obiettivo_principale?: string
+          status?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author_id: string
@@ -190,6 +238,148 @@ export type Database = {
           status?: string
           telefono?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      conversion_metrics: {
+        Row: {
+          audit_request_id: string | null
+          conversion_value: number | null
+          id: string
+          notes: string | null
+          phase: string
+          source_channel: string | null
+          timestamp: string
+        }
+        Insert: {
+          audit_request_id?: string | null
+          conversion_value?: number | null
+          id?: string
+          notes?: string | null
+          phase: string
+          source_channel?: string | null
+          timestamp?: string
+        }
+        Update: {
+          audit_request_id?: string | null
+          conversion_value?: number | null
+          id?: string
+          notes?: string | null
+          phase?: string
+          source_channel?: string | null
+          timestamp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversion_metrics_audit_request_id_fkey"
+            columns: ["audit_request_id"]
+            isOneToOne: false
+            referencedRelation: "audit_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_sequences: {
+        Row: {
+          audit_request_id: string | null
+          clicked: boolean | null
+          email_body: string
+          email_subject: string
+          id: string
+          opened: boolean | null
+          replied: boolean | null
+          sent_at: string
+          sequence_type: string
+        }
+        Insert: {
+          audit_request_id?: string | null
+          clicked?: boolean | null
+          email_body: string
+          email_subject: string
+          id?: string
+          opened?: boolean | null
+          replied?: boolean | null
+          sent_at?: string
+          sequence_type: string
+        }
+        Update: {
+          audit_request_id?: string | null
+          clicked?: boolean | null
+          email_body?: string
+          email_subject?: string
+          id?: string
+          opened?: boolean | null
+          replied?: boolean | null
+          sent_at?: string
+          sequence_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_sequences_audit_request_id_fkey"
+            columns: ["audit_request_id"]
+            isOneToOne: false
+            referencedRelation: "audit_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      landing_pages: {
+        Row: {
+          case_studies: string[] | null
+          conversion_rate: number | null
+          conversions: number | null
+          created_at: string
+          cta_primary: string
+          cta_secondary: string | null
+          hero_subtitle: string
+          hero_title: string
+          id: string
+          published: boolean | null
+          slug: string
+          social_proof: string[] | null
+          target_audience: string
+          title: string
+          updated_at: string
+          value_proposition: string
+          visits: number | null
+        }
+        Insert: {
+          case_studies?: string[] | null
+          conversion_rate?: number | null
+          conversions?: number | null
+          created_at?: string
+          cta_primary: string
+          cta_secondary?: string | null
+          hero_subtitle: string
+          hero_title: string
+          id?: string
+          published?: boolean | null
+          slug: string
+          social_proof?: string[] | null
+          target_audience: string
+          title: string
+          updated_at?: string
+          value_proposition: string
+          visits?: number | null
+        }
+        Update: {
+          case_studies?: string[] | null
+          conversion_rate?: number | null
+          conversions?: number | null
+          created_at?: string
+          cta_primary?: string
+          cta_secondary?: string | null
+          hero_subtitle?: string
+          hero_title?: string
+          id?: string
+          published?: boolean | null
+          slug?: string
+          social_proof?: string[] | null
+          target_audience?: string
+          title?: string
+          updated_at?: string
+          value_proposition?: string
+          visits?: number | null
         }
         Relationships: []
       }
