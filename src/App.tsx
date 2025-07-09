@@ -22,6 +22,7 @@ import BandiDigitali from "./pages/BandiDigitali";
 import SimestTransizioneDigitale from "./pages/SimestTransizioneDigitale";
 import VoucherDigitalizzazione from "./pages/VoucherDigitalizzazione";
 import CreditoImposta from "./pages/CreditoImposta";
+import Privacy from "./pages/Privacy";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/bandi-digitali/simest-transizione-digitale" element={<SimestTransizioneDigitale />} />
           <Route path="/bandi-digitali/voucher-digitalizzazione" element={<VoucherDigitalizzazione />} />
           <Route path="/bandi-digitali/credito-imposta-formazione" element={<CreditoImposta />} />
+              <Route path="/privacy" element={<Privacy />} />
               <Route path="/landing/:slug" element={<LandingPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
