@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import optixwebLogo from "@/assets/optixweb-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,8 +25,8 @@ const Header = () => {
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-optix-blue to-optix-light-blue bg-clip-text text-transparent">
-              Optixweb.space
+            <Link to="/" className="flex items-center space-x-3">
+              <img src={optixwebLogo} alt="Optixweb.space" className="h-10 w-auto" />
             </Link>
           </div>
 
