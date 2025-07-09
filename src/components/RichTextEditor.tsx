@@ -32,7 +32,7 @@ export default function RichTextEditor({
       {label && <Label>{label}</Label>}
       <div className="border rounded-md overflow-hidden">
         <Editor
-          apiKey="no-api-key" // Per uso locale, non serve chiave API
+          apiKey="nh561evwfc11hzmm00r0sby4o77ba4mg01iyv6czacdc0w6g"
           onInit={(evt, editor) => editorRef.current = editor}
           value={value}
           onEditorChange={handleEditorChange}
