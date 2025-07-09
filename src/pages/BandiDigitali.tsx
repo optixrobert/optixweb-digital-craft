@@ -244,7 +244,7 @@ const BandiDigitali = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-              <a href="https://wa.me/393451234567?text=Vorrei%20informazioni%20sui%20bandi%20digitali" target="_blank">
+              <a href="https://wa.me/393532004367?text=Vorrei%20informazioni%20sui%20bandi%20digitali" target="_blank">
                 WhatsApp Diretto
               </a>
             </Button>

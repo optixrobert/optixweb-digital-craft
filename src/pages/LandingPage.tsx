@@ -114,7 +114,7 @@ export default function LandingPage() {
     return <Navigate to="/404" replace />;
   }
 
-  const whatsappNumber = "+393451234567"; // Sostituisci con il tuo numero
+  const whatsappNumber = "+393532004367"; // Numero WhatsApp aziendale
   const whatsappMessage = `Ciao! Sono interessato ai vostri servizi web. Ho visitato la pagina ${slug}`;
   const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(whatsappMessage)}`;
 

@@ -197,7 +197,7 @@ const Index = () => {
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="text-lg px-8 py-3">
-                  <a href="https://wa.me/393451234567?text=Ciao!%20Vorrei%20parlare%20dei%20vostri%20servizi%20web" target="_blank">
+                  <a href="https://wa.me/393532004367?text=Ciao!%20Vorrei%20parlare%20dei%20vostri%20servizi%20web" target="_blank">
                     Parla con WhatsApp
                     <MessageCircle className="w-5 h-5 ml-2" />
                   </a>

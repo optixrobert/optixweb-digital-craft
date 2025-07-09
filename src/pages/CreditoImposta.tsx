@@ -156,7 +156,7 @@ const CreditoImposta = () => {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="text-lg px-8 py-3">
-                  <a href="https://wa.me/393451234567?text=Vorrei%20informazioni%20sui%20corsi%20formazione%204.0" target="_blank">
+                  <a href="https://wa.me/393532004367?text=Vorrei%20informazioni%20sui%20corsi%20formazione%204.0" target="_blank">
                     WhatsApp Diretto
                   </a>
                 </Button>
