@@ -6,6 +6,7 @@ import { ArrowRight, Euro, CheckCircle, Calendar, Users, TrendingUp, Building, T
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
+import { AuditRequestForm } from "@/components/AuditRequestForm";
 
 const SimestTransizioneDigitale = () => {
   const seoComponent = useSEO({
@@ -358,30 +359,26 @@ const SimestTransizioneDigitale = () => {
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary to-primary/80">
-        <div className="container mx-auto px-4 lg:px-6 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            Pronto a Ottenere Fino a €300.000 per la Digitalizzazione?
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            <strong>Analisi di fattibilità gratuita</strong> e senza impegno. 
-            Verifichiamo subito se la tua azienda può accedere al Bando SIMEST.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-              <Link to="/contatti">
-                Richiedi Analisi Gratuita Ora
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-              <a href="https://wa.me/393451234567?text=Vorrei%20l%27analisi%20gratuita%20per%20il%20bando%20SIMEST" target="_blank">
-                WhatsApp: Analisi Immediata
-              </a>
-            </Button>
+        <div className="container mx-auto px-4 lg:px-6">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+              Pronto a Ottenere Fino a €300.000 per la Digitalizzazione?
+            </h2>
+            <p className="text-xl text-white/90 mb-4 max-w-2xl mx-auto">
+              <strong>Analisi di fattibilità gratuita</strong> e senza impegno. 
+              Verifichiamo subito se la tua azienda può accedere al Bando SIMEST.
+            </p>
+            <div className="mt-4 text-white/80 text-sm">
+              ⏰ <strong>Scadenza bando: 31 Dicembre 2024</strong> - Non perdere questa opportunità!
+            </div>
           </div>
           
-          <div className="mt-8 text-white/80 text-sm">
-            ⏰ <strong>Scadenza bando: 31 Dicembre 2024</strong> - Non perdere questa opportunità!
+          <div className="max-w-2xl mx-auto">
+            <AuditRequestForm 
+              variant="default" 
+              sourceChannel="bando-simest" 
+              landingPage="/bandi-digitali/simest-transizione-digitale" 
+            />
           </div>
         </div>
       </section>
