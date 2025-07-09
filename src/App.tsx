@@ -23,6 +23,7 @@ import SimestTransizioneDigitale from "./pages/SimestTransizioneDigitale";
 import VoucherDigitalizzazione from "./pages/VoucherDigitalizzazione";
 import CreditoImposta from "./pages/CreditoImposta";
 import Privacy from "./pages/Privacy";
+import ScrollToTop from "./components/ScrollToTop";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 
@@ -35,6 +36,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <GA4Provider>
             <Routes>
               <Route path="/" element={<Index />} />
