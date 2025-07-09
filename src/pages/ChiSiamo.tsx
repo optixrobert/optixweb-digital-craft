@@ -9,32 +9,52 @@ import teamImage from "@/assets/team-image.jpg";
 
 const ChiSiamo = () => {
   const seoComponent = useSEO({
-    title: "Chi Siamo - Web Agency Italiana",
-    description: "Scopri il team di Optixweb.space: professionisti appassionati con oltre 5 anni di esperienza nella realizzazione di siti web e applicazioni digitali innovative.",
-    keywords: "chi siamo web agency, team sviluppatori web, esperienza web design, professionisti digitali Italia, agenzia web italiana",
-    canonicalUrl: "https://optixweb.space/chi-siamo"
+    title: "Optix Web - Agenzia Digitale Italiana | 40 Esperti Web con 12+ Anni di Esperienza",
+    description: "Optix Web: agenzia digitale italiana specializzata in sviluppo siti web e applicazioni personalizzate. 40 esperti con 12+ anni di esperienza al servizio delle aziende italiane.",
+    keywords: "agenzia web Italia, sviluppo siti web aziende, creazione applicazioni personalizzate, agenzia digitale italiana, sviluppatori web esperti marketing digitale",
+    canonicalUrl: "https://optixweb.space/chi-siamo",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Optix Web",
+      "description": "Agenzia digitale italiana specializzata in sviluppo siti web e applicazioni personalizzate",
+      "url": "https://optixweb.space",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IT"
+      },
+      "numberOfEmployees": "40+",
+      "foundingDate": "2012",
+      "areaServed": "IT",
+      "services": [
+        "Sviluppo siti web personalizzati",
+        "Creazione applicazioni su misura", 
+        "Consulenza marketing digitale",
+        "Ottimizzazione SEO"
+      ]
+    }
   });
 
   const values = [
     {
       icon: Users,
-      title: "Team esperto",
-      description: "Un team di professionisti con esperienza consolidata nel settore digitale."
+      title: "Sviluppo Siti Web Personalizzati",
+      description: "Creiamo siti web su misura per aziende italiane, ottimizzati per conversioni e SEO locale."
     },
     {
       icon: Target,
-      title: "Obiettivi chiari",
-      description: "Lavoriamo sempre con obiettivi ben definiti per garantire risultati misurabili."
+      title: "Creazione Applicazioni su Misura", 
+      description: "Sviluppiamo applicazioni web personalizzate seguendo gli standard GDPR e normative italiane."
     },
     {
       icon: Lightbulb,
-      title: "Innovazione",
-      description: "Utilizziamo le tecnologie più avanzate per creare soluzioni all'avanguardia."
+      title: "Consulenza Marketing Digitale",
+      description: "Strategie digital specifiche per il mercato italiano e aziende che vendono in Italia."
     },
     {
       icon: Heart,
-      title: "Passione",
-      description: "La passione per il nostro lavoro si riflette in ogni progetto che realizziamo."
+      title: "Supporto Dedicato",
+      description: "Assistenza tecnica in italiano per tutto il territorio nazionale con team locale."
     }
   ];
 
@@ -66,12 +86,12 @@ const ChiSiamo = () => {
         <div className="container mx-auto px-4 lg:px-6">
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-              Chi siamo
+              Chi Siamo - Optix Web, La Tua Agenzia Digitale di Fiducia in Italia
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Siamo una developer agency italiana specializzata nel supporto ad agenzie web e clienti finali. 
-              Il nostro team combina competenza tecnica avanzata e visione strategica per 
-              sviluppare soluzioni digitali che superano ogni aspettativa.
+              Siamo un'agenzia web italiana con <strong>40 esperti web</strong> e oltre <strong>12 anni di esperienza</strong> 
+              nel supporto ad aziende italiane. Il nostro team combina competenza tecnica avanzata e visione strategica per 
+              sviluppare soluzioni digitali che superano ogni aspettativa nel mercato italiano.
             </p>
           </div>
         </div>
@@ -83,20 +103,21 @@ const ChiSiamo = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-                La nostra <span className="bg-gradient-to-r from-optix-blue to-optix-light-blue bg-clip-text text-transparent">mission</span>
+                40 Esperti Web con Oltre 12 Anni di Esperienza
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
                 Crediamo che ogni progetto digitale meriti un approccio tecnico all'avanguardia. 
-                La nostra missione è essere il partner tecnologico di riferimento per agenzie web 
-                e clienti finali, offrendo competenze di sviluppo avanzate e soluzioni scalabili.
+                La nostra missione è essere il partner tecnologico di riferimento per le <strong>aziende italiane</strong>, 
+                offrendo competenze di sviluppo avanzate e soluzioni scalabili per tutto il <strong>territorio italiano</strong>.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Collaboriamo con agenzie per potenziare la loro offerta tecnica e con clienti finali 
-                per trasformare idee complesse in piattaforme digitali robuste e performanti.
+                Collaboriamo con <strong>PMI italiane</strong> e grandi aziende per trasformare idee complesse 
+                in piattaforme digitali robuste e performanti. La nostra esperienza nel <strong>mercato italiano</strong> 
+                ci permette di comprendere le specifiche esigenze delle aziende locali.
               </p>
               <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-light-blue hover:from-optix-blue/90 hover:to-optix-light-blue/90 text-white">
                 <Link to="/contatti">
-                  Inizia il tuo progetto
+                  Inizia il tuo progetto con noi
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -119,11 +140,11 @@ const ChiSiamo = () => {
         <div className="container mx-auto px-4 lg:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-              I nostri valori
+              I Nostri Servizi per le Aziende Italiane
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Questi principi guidano ogni nostra decisione e si riflettono 
-              nella qualità del nostro lavoro e nel rapporto con i clienti.
+              nella qualità del nostro lavoro e nel rapporto con i <strong>clienti italiani</strong>.
             </p>
           </div>
           
@@ -184,11 +205,11 @@ const ChiSiamo = () => {
             </h2>
             <div className="grid md:grid-cols-4 gap-8 mt-12">
               <div>
-                <div className="text-4xl lg:text-5xl font-bold mb-2">100+</div>
+                <div className="text-4xl lg:text-5xl font-bold mb-2">200+</div>
                 <div className="text-lg opacity-90">Progetti completati</div>
               </div>
               <div>
-                <div className="text-4xl lg:text-5xl font-bold mb-2">5+</div>
+                <div className="text-4xl lg:text-5xl font-bold mb-2">12+</div>
                 <div className="text-lg opacity-90">Anni di esperienza</div>
               </div>
               <div>
