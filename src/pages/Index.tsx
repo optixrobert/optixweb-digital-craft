@@ -134,7 +134,7 @@ const Index = () => {
       title: "E-commerce Custom",
       description: "Piattaforme e-commerce su misura sviluppate con tecnologie moderne per progetti complessi.",
       badge: "Personalizzato",
-      color: "from-optix-blue to-optix-green"
+      color: "from-optix-blue to-optix-light-blue"
     }
   ];
 
@@ -151,14 +151,14 @@ const Index = () => {
             <div className="space-y-8">
               <div className="space-y-4">
                 <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                  <span className="bg-gradient-to-r from-optix-blue to-optix-green bg-clip-text text-transparent">
-                    Costruiamo
+                  <span className="bg-gradient-to-r from-optix-blue to-optix-light-blue bg-clip-text text-transparent">
+                    Developer Agency
                   </span>{" "}
-                  la tua presenza digitale
+                  per agenzie e clienti finali
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-xl">
-                  Web agency italiana specializzata in soluzioni digitali professionali per PMI, startup e professionisti. 
-                  Trasformiamo le tue idee in realtà digitali di successo.
+                  Partner tecnologico specializzato nello sviluppo di soluzioni digitali per agenzie web e clienti finali. 
+                  Trasformiamo progetti complessi in realtà digitali performanti.
                 </p>
               </div>
               
@@ -166,7 +166,7 @@ const Index = () => {
                 <Button 
                   asChild 
                   size="lg" 
-                  className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white"
+                  className="bg-gradient-to-r from-optix-blue to-optix-light-blue hover:from-optix-blue/90 hover:to-optix-light-blue/90 text-white"
                   onClick={() => GA4Events.ctaClick('prenota_consulenza', 'hero')}
                 >
                   <Link to="/contatti">
@@ -228,7 +228,7 @@ const Index = () => {
             {services.map((service, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white">
                 <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-optix-blue to-optix-green rounded-lg flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-optix-blue to-optix-light-blue rounded-lg flex items-center justify-center mb-4">
                     <service.icon className="h-6 w-6 text-white" />
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{service.title}</h3>
@@ -292,7 +292,7 @@ const Index = () => {
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white"
+                className="bg-gradient-to-r from-optix-blue to-optix-light-blue hover:from-optix-blue/90 hover:to-optix-light-blue/90 text-white"
                 onClick={() => GA4Events.ctaClick('consulenza_ecommerce', 'ecommerce_section')}
               >
                 <Link to="/contatti">
@@ -492,7 +492,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-optix-blue to-optix-green">
+      <section className="py-20 bg-gradient-to-r from-optix-blue to-optix-light-blue">
         <div className="container mx-auto px-4 lg:px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
             Pronto a trasformare la tua presenza digitale?

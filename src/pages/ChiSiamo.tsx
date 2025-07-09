@@ -69,9 +69,9 @@ const ChiSiamo = () => {
               Chi siamo
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Siamo una web agency italiana nata dalla passione per l'innovazione digitale. 
-              Il nostro team combina creatività, competenza tecnica e visione strategica per 
-              creare soluzioni digitali che fanno davvero la differenza.
+              Siamo una developer agency italiana specializzata nel supporto ad agenzie web e clienti finali. 
+              Il nostro team combina competenza tecnica avanzata e visione strategica per 
+              sviluppare soluzioni digitali che superano ogni aspettativa.
             </p>
           </div>
         </div>
@@ -83,20 +83,18 @@ const ChiSiamo = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-                La nostra <span className="bg-gradient-to-r from-optix-blue to-optix-green bg-clip-text text-transparent">mission</span>
+                La nostra <span className="bg-gradient-to-r from-optix-blue to-optix-light-blue bg-clip-text text-transparent">mission</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Crediamo che ogni azienda, indipendentemente dalle sue dimensioni, meriti 
-                una presenza digitale di qualità. La nostra missione è democratizzare 
-                l'accesso alle tecnologie web avanzate, offrendo soluzioni professionali 
-                a prezzi accessibili.
+                Crediamo che ogni progetto digitale meriti un approccio tecnico all'avanguardia. 
+                La nostra missione è essere il partner tecnologico di riferimento per agenzie web 
+                e clienti finali, offrendo competenze di sviluppo avanzate e soluzioni scalabili.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Lavoriamo fianco a fianco con i nostri clienti per comprendere le loro 
-                esigenze specifiche e trasformare le loro visioni in realtà digitali 
-                concrete e performanti.
+                Collaboriamo con agenzie per potenziare la loro offerta tecnica e con clienti finali 
+                per trasformare idee complesse in piattaforme digitali robuste e performanti.
               </p>
-              <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white">
+              <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-light-blue hover:from-optix-blue/90 hover:to-optix-light-blue/90 text-white">
                 <Link to="/contatti">
                   Inizia il tuo progetto
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -133,7 +131,7 @@ const ChiSiamo = () => {
             {values.map((value, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white">
                 <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-optix-blue to-optix-green rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-optix-blue to-optix-light-blue rounded-full flex items-center justify-center mx-auto mb-4">
                     <value.icon className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="font-semibold text-lg mb-3">{value.title}</h3>
@@ -162,7 +160,7 @@ const ChiSiamo = () => {
             {teamMembers.map((member, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
                 <CardContent className="p-6 text-center">
-                  <div className="w-20 h-20 bg-gradient-to-r from-optix-blue to-optix-green rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-20 h-20 bg-gradient-to-r from-optix-blue to-optix-light-blue rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-2xl font-bold text-white">
                       {member.name.charAt(0)}
                     </span>
@@ -178,7 +176,7 @@ const ChiSiamo = () => {
       </section>
 
       {/* Experience Section */}
-      <section className="py-20 bg-gradient-to-r from-optix-blue to-optix-green">
+      <section className="py-20 bg-gradient-to-r from-optix-blue to-optix-light-blue">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="text-center text-white">
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
@@ -217,7 +215,7 @@ const ChiSiamo = () => {
             aiutarti a realizzare i tuoi obiettivi digitali.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white">
+            <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-light-blue hover:from-optix-blue/90 hover:to-optix-light-blue/90 text-white">
               <Link to="/contatti">
                 Contattaci ora
                 <ArrowRight className="ml-2 h-4 w-4" />

@@ -53,7 +53,8 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				'optix-blue': 'hsl(var(--optix-blue))',
-				'optix-green': 'hsl(var(--optix-green))',
+				'optix-light-blue': 'hsl(var(--optix-light-blue))',
+				'optix-dark-blue': 'hsl(var(--optix-dark-blue))',
 				'optix-navy': 'hsl(var(--optix-navy))',
 				'optix-light': 'hsl(var(--optix-light))',
 				sidebar: {

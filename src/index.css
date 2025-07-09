@@ -36,17 +36,18 @@ All colors MUST be HSL.
     --input: 216 12% 90%;
     --ring: 217 91% 60%;
 
-    /* Custom brand colors */
-    --optix-blue: 217 91% 60%;
-    --optix-green: 145 63% 49%;
-    --optix-navy: 216 50% 25%;
-    --optix-light: 217 91% 95%;
+    /* Custom brand colors - More blue-focused */
+    --optix-blue: 210 100% 60%;
+    --optix-light-blue: 217 91% 75%;
+    --optix-dark-blue: 216 85% 35%;
+    --optix-navy: 216 85% 25%;
+    --optix-light: 210 100% 96%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--optix-blue)), hsl(var(--optix-green)));
+    /* Gradients - Blue focused */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--optix-blue)), hsl(var(--optix-light-blue)));
     --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--optix-light)));
     
-    /* Shadows */
+    /* Shadows - Blue focused */
     --shadow-soft: 0 4px 6px -1px hsl(var(--optix-blue) / 0.1);
     --shadow-medium: 0 10px 15px -3px hsl(var(--optix-blue) / 0.1);
     --shadow-large: 0 25px 50px -12px hsl(var(--optix-blue) / 0.15);
