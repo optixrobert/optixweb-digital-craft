@@ -8,8 +8,12 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="md:col-span-1">
-            <div className="text-2xl font-bold bg-gradient-to-r from-optix-blue to-optix-green bg-clip-text text-transparent mb-4">
-              Optixweb.space
+            <div className="mb-4">
+              <img 
+                src="/lovable-uploads/a78b71f8-8d01-4175-9857-25b38699a943.png" 
+                alt="Optix Web" 
+                className="h-12 w-auto"
+              />
             </div>
             <p className="text-gray-300 mb-4">
               La tua web agency di fiducia per soluzioni digitali professionali e innovative.
