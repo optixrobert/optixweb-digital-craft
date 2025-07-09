@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import optixwebLogo from "@/assets/optixweb-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,7 +25,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3">
-              <img src={optixwebLogo} alt="Optixweb.space" className="h-10 w-auto" />
+              <img src="/lovable-uploads/1502c394-6b1a-4830-bc89-9e1605325c92.png" alt="Optixweb.space" className="h-10 w-auto" />
             </Link>
           </div>
 
