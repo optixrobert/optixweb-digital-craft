@@ -18,6 +18,8 @@ import AreaClienti from "./pages/AreaClienti";
 import AdminDashboard from "./pages/AdminDashboard";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import BandiDigitali from "./pages/BandiDigitali";
+import SimestTransizioneDigitale from "./pages/SimestTransizioneDigitale";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +46,8 @@ const App = () => (
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/bandi-digitali" element={<BandiDigitali />} />
+              <Route path="/bandi-digitali/simest-transizione-digitale" element={<SimestTransizioneDigitale />} />
               <Route path="/landing/:slug" element={<LandingPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
