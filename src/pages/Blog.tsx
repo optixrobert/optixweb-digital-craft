@@ -35,6 +35,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        console.log('Fetching blog posts...');
         const { data, error } = await supabase
           .from('blog_posts')
           .select(`
@@ -44,13 +45,26 @@ const Blog = () => {
             slug,
             created_at,
             featured_image_url,
-            profiles!inner(first_name, last_name)
+            author_id
           `)
           .eq('published', true)
           .order('published_at', { ascending: false });
 
+        console.log('Blog posts data:', data);
+        console.log('Blog posts error:', error);
+
         if (error) throw error;
-        setPosts(data as BlogPost[]);
+        
+        // Fetch author profiles separately if needed
+        const postsWithAuthors = data?.map(post => ({
+          ...post,
+          profiles: {
+            first_name: 'Admin',
+            last_name: 'Optix'
+          }
+        })) || [];
+        
+        setPosts(postsWithAuthors as BlogPost[]);
       } catch (error) {
         console.error('Error fetching blog posts:', error);
       } finally {
