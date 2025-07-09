@@ -73,6 +73,42 @@ export type Database = {
           },
         ]
       }
+      clients: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          logo_url: string | null
+          name: string
+          published: boolean
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          published?: boolean
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          published?: boolean
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       consultation_requests: {
         Row: {
           company: string | null

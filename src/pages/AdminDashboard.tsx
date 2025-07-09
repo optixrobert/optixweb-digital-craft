@@ -7,8 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, Users, Ticket, AlertCircle, CheckCircle, FileText, Plus, Edit, Trash2, Mail, MessageSquare } from 'lucide-react';
+import { LogOut, Users, Ticket, AlertCircle, CheckCircle, FileText, Plus, Edit, Trash2, Mail, MessageSquare, Building2 } from 'lucide-react';
 import BlogPostDialog from '@/components/BlogPostDialog';
+import ClientDialog from '@/components/ClientDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
@@ -98,6 +99,18 @@ interface ConsultationRequest {
   created_at: string;
 }
 
+interface Client {
+  id: string;
+  name: string;
+  description: string | null;
+  logo_url: string | null;
+  website_url: string | null;
+  display_order: number;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 const statusColors = {
   open: 'bg-blue-100 text-blue-800',
   in_progress: 'bg-yellow-100 text-yellow-800',
@@ -122,10 +135,13 @@ export default function AdminDashboard() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [contactRequests, setContactRequests] = useState<ContactRequest[]>([]);
   const [consultationRequests, setConsultationRequests] = useState<ConsultationRequest[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showBlogDialog, setShowBlogDialog] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [showClientDialog, setShowClientDialog] = useState(false);
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -160,7 +176,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [ticketsResponse, profilesResponse, subscribersResponse, blogResponse, contactResponse, consultationResponse] = await Promise.all([
+      const [ticketsResponse, profilesResponse, subscribersResponse, blogResponse, contactResponse, consultationResponse, clientsResponse] = await Promise.all([
         supabase
           .from('tickets')
           .select(`
@@ -190,7 +206,11 @@ export default function AdminDashboard() {
         supabase
           .from('consultation_requests')
           .select('*')
-          .order('created_at', { ascending: false })
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('clients')
+          .select('*')
+          .order('display_order', { ascending: true })
       ]);
 
       if (ticketsResponse.error) throw ticketsResponse.error;
@@ -199,6 +219,7 @@ export default function AdminDashboard() {
       if (blogResponse.error) throw blogResponse.error;
       if (contactResponse.error) throw contactResponse.error;
       if (consultationResponse.error) throw consultationResponse.error;
+      if (clientsResponse.error) throw clientsResponse.error;
 
       setTickets((ticketsResponse.data as TicketWithProfile[]) || []);
       setProfiles(profilesResponse.data || []);
@@ -206,6 +227,7 @@ export default function AdminDashboard() {
       setBlogPosts((blogResponse.data as BlogPost[]) || []);
       setContactRequests(contactResponse.data || []);
       setConsultationRequests(consultationResponse.data || []);
+      setClients(clientsResponse.data || []);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast({
@@ -284,6 +306,30 @@ export default function AdminDashboard() {
     }
   };
 
+  const deleteClient = async (clientId: string) => {
+    try {
+      const { error } = await supabase
+        .from('clients')
+        .delete()
+        .eq('id', clientId);
+
+      if (error) throw error;
+
+      setClients(clients.filter(client => client.id !== clientId));
+      toast({
+        title: "Cliente eliminato",
+        description: "Il cliente è stato eliminato con successo",
+      });
+    } catch (error) {
+      console.error('Error deleting client:', error);
+      toast({
+        title: "Errore",
+        description: "Errore nell'eliminazione del cliente",
+        variant: "destructive",
+      });
+    }
+  };
+
   const getStatsData = () => {
     const openTickets = tickets.filter(t => t.status === 'open').length;
     const inProgressTickets = tickets.filter(t => t.status === 'in_progress').length;
@@ -291,6 +337,7 @@ export default function AdminDashboard() {
     const totalUsers = profiles.length;
     const activeSubscriptions = subscribers.filter(s => s.subscribed).length;
     const publishedPosts = blogPosts.filter(p => p.published).length;
+    const publishedClients = clients.filter(c => c.published).length;
     const totalRevenue = subscribers
       .filter(s => s.subscribed)
       .reduce((acc, s) => {
@@ -302,7 +349,7 @@ export default function AdminDashboard() {
         return acc + (tierRevenue[s.subscription_tier as keyof typeof tierRevenue] || 0);
       }, 0);
 
-    return { openTickets, inProgressTickets, resolvedTickets, totalUsers, activeSubscriptions, publishedPosts, totalRevenue };
+    return { openTickets, inProgressTickets, resolvedTickets, totalUsers, activeSubscriptions, publishedPosts, publishedClients, totalRevenue };
   };
 
   if (loading) {
@@ -345,7 +392,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-6 mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Ticket Aperti</CardTitle>
@@ -408,6 +455,16 @@ export default function AdminDashboard() {
             
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Clienti Pubblicati</CardTitle>
+                <Building2 className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-optix-purple">{stats.publishedClients}</div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Ricavi Mensili</CardTitle>
                 <Users className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
@@ -421,6 +478,7 @@ export default function AdminDashboard() {
             <TabsList>
               <TabsTrigger value="contacts">Richieste di Contatto</TabsTrigger>
               <TabsTrigger value="consultations">Consulenze</TabsTrigger>
+              <TabsTrigger value="clients">Gestione Clienti</TabsTrigger>
               <TabsTrigger value="blog">Gestione Blog</TabsTrigger>
               <TabsTrigger value="subscribers">Abbonamenti</TabsTrigger>
               <TabsTrigger value="tickets">Ticket Support</TabsTrigger>
@@ -536,6 +594,104 @@ export default function AdminDashboard() {
                             )}
                           </TableCell>
                           <TableCell>{formatDate(request.created_at)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Clients Management */}
+            <TabsContent value="clients">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle>Gestione Clienti</CardTitle>
+                    <CardDescription>
+                      Gestisci i clienti e partnership mostrati sul sito
+                    </CardDescription>
+                  </div>
+                  <Button onClick={() => setShowClientDialog(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Nuovo Cliente
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nome</TableHead>
+                        <TableHead>Descrizione</TableHead>
+                        <TableHead>Sito Web</TableHead>
+                        <TableHead>Ordine</TableHead>
+                        <TableHead>Stato</TableHead>
+                        <TableHead>Azioni</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {clients.map((client) => (
+                        <TableRow key={client.id}>
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              {client.logo_url && (
+                                <img
+                                  src={client.logo_url}
+                                  alt={client.name}
+                                  className="w-8 h-8 object-contain rounded"
+                                />
+                              )}
+                              <div>
+                                <div className="font-semibold">{client.name}</div>
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            {client.description && (
+                              <div className="max-w-xs truncate" title={client.description}>
+                                {client.description}
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {client.website_url && (
+                              <a
+                                href={client.website_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-optix-blue hover:underline"
+                              >
+                                Visita
+                              </a>
+                            )}
+                          </TableCell>
+                          <TableCell>{client.display_order}</TableCell>
+                          <TableCell>
+                            <Badge className={client.published ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                              {client.published ? 'Pubblicato' : 'Bozza'}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  setEditingClient(client);
+                                  setShowClientDialog(true);
+                                }}
+                              >
+                                <Edit className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => deleteClient(client.id)}
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -771,6 +927,16 @@ export default function AdminDashboard() {
               if (!open) setEditingPost(null);
             }}
             post={editingPost}
+            onSuccess={fetchData}
+          />
+
+          <ClientDialog
+            open={showClientDialog}
+            onOpenChange={(open) => {
+              setShowClientDialog(open);
+              if (!open) setEditingClient(null);
+            }}
+            client={editingClient}
             onSuccess={fetchData}
           />
         </div>
