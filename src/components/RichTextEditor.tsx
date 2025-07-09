@@ -45,13 +45,15 @@ export default function RichTextEditor({
               'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
               'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount',
               'emoticons', 'codesample', 'hr', 'pagebreak', 'nonbreaking',
-              'visualchars', 'paste', 'textpattern', 'imagetools'
+              'visualchars', 'paste', 'textpattern', 'imagetools', 'textcolor',
+              'colorpicker', 'fontselect', 'fontsizeselect', 'lineheight'
             ],
             toolbar: [
-              'undo redo | formatselect | bold italic underline strikethrough | forecolor backcolor',
-              'alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist',
-              'link image media table | codesample blockquote hr pagebreak',
-              'removeformat | fullscreen preview code | emoticons charmap | help'
+              'undo redo | formatselect fontselect fontsizeselect | bold italic underline strikethrough',
+              'forecolor backcolor | alignleft aligncenter alignright alignjustify | lineheight',
+              'outdent indent | numlist bullist | link image media table',
+              'codesample blockquote hr pagebreak | removeformat | fullscreen preview code',
+              'emoticons charmap | customButton | help'
             ].join(' | '),
             content_style: `
               body { 
