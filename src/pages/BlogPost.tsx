@@ -57,7 +57,8 @@ const BlogPost = () => {
             featured_image_url,
             meta_title,
             meta_description,
-            profiles!blog_posts_author_id_fkey(first_name, last_name)
+            author_id,
+            profiles!inner(first_name, last_name)
           `)
           .eq('slug', slug)
           .eq('published', true)

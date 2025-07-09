@@ -44,7 +44,7 @@ const Blog = () => {
             slug,
             created_at,
             featured_image_url,
-            profiles!blog_posts_author_id_fkey(first_name, last_name)
+            profiles!inner(first_name, last_name)
           `)
           .eq('published', true)
           .order('published_at', { ascending: false });
