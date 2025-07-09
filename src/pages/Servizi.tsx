@@ -2,63 +2,80 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { ArrowRight, Code, ShoppingCart, Palette, Search, Zap, Monitor, Smartphone, Globe } from "lucide-react";
+import { ArrowRight, Code, ShoppingCart, Palette, Search, Zap, Monitor, Smartphone, Globe, CheckCircle, Star, Users } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useSEO, createServiceStructuredData } from "@/hooks/useSEO";
 
 const Servizi = () => {
   const seoComponent = useSEO({
-    title: "Servizi Web Agency",
-    description: "Scopri tutti i servizi di Optixweb.space: realizzazione siti web, e-commerce, applicazioni web, SEO, UX/UI design e consulenza digitale per far crescere la tua attività online.",
-    keywords: "servizi web agency, realizzazione siti web, e-commerce, sviluppo applicazioni, SEO professionale, UX/UI design, web marketing, consulenza digitale, manutenzione siti web",
+    title: "Servizi Web Professionali Italia | Optix Web - Siti, E-commerce, Applicazioni",
+    description: "Servizi web professionali per aziende italiane: sviluppo siti web, e-commerce, applicazioni personalizzate. 40 esperti con 12+ anni di esperienza. Consulenza gratuita.",
+    keywords: "servizi web Italia, sviluppo siti web aziende, e-commerce personalizzato Italia, applicazioni web su misura, web agency professionale, servizi digitali aziende italiane",
     canonicalUrl: "https://optixweb.space/servizi",
-    structuredData: createServiceStructuredData("Servizi Web Agency", "Servizi completi di web agency per la tua presenza digitale")
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Service", 
+      "name": "Servizi Web Professionali",
+      "provider": {
+        "@type": "Organization",
+        "name": "Optix Web",
+        "areaServed": "IT"
+      },
+      "serviceType": [
+        "Sviluppo siti web aziende",
+        "E-commerce personalizzato",
+        "Applicazioni web su misura",
+        "UX/UI Design professionale",
+        "SEO locale Italia"
+      ],
+      "description": "Servizi web completi per aziende italiane con 40 esperti e 12+ anni di esperienza"
+    }
   });
 
   const mainServices = [
     {
       icon: Code,
-      title: "Realizzazione Siti Web",
-      description: "Creiamo siti web professionali, responsive e ottimizzati per convertire i visitatori in clienti.",
-      features: ["Design responsive", "Ottimizzazione SEO base", "Gestione contenuti", "Sicurezza SSL"],
+      title: "Realizzazione Siti Web Professionali per Aziende",
+      description: "Creiamo siti web professionali, responsive e ottimizzati SEO per aziende italiane. I nostri siti web non sono solo belli da vedere, ma sono progettati per convertire visitatori in clienti e migliorare il tuo posizionamento su Google.",
+      features: ["Ottimizzazione SEO inclusa", "Design responsive garantito", "Tempi di caricamento ottimizzati", "Compatibilità cross-browser"],
       types: [
-        { name: "Siti Vetrina", desc: "Presentazione professionale della tua attività" },
-        { name: "Blog Aziendali", desc: "Piattaforme per condividere contenuti di valore" },
-        { name: "Portali Informativi", desc: "Siti ricchi di contenuti e funzionalità" }
+        { name: "Siti Vetrina", desc: "Presentazione professionale ottimizzata per aziende italiane" },
+        { name: "Blog Aziendali", desc: "Piattaforme SEO-friendly per contenuti di valore" },
+        { name: "Portali Informativi", desc: "Siti ricchi di contenuti ottimizzati per Google" }
       ]
     },
     {
       icon: ShoppingCart,
-      title: "E-commerce",
-      description: "Sviluppiamo negozi online completi per vendere i tuoi prodotti o servizi 24/7.",
-      features: ["Catalogo prodotti", "Gestione ordini", "Pagamenti sicuri", "Dashboard admin"],
+      title: "Sviluppo E-commerce Personalizzati",
+      description: "Sviluppiamo negozi online completi che vendono 24/7. Le nostre soluzioni e-commerce sono ottimizzate per il mercato italiano, con integrazione di sistemi di pagamento locali e conformità alle normative italiane.",
+      features: ["Integrazione corrieri italiani", "Sistemi pagamento locali (Satispay, Nexi)", "Conformità GDPR", "Ottimizzazione mobile commerce"],
       types: [
-        { name: "WooCommerce", desc: "Soluzioni flessibili basate su WordPress" },
-        { name: "Shopify", desc: "Piattaforme complete chiavi in mano" },
-        { name: "Custom", desc: "Sviluppo personalizzato per esigenze specifiche" }
+        { name: "WooCommerce", desc: "Soluzioni e-commerce flessibili per il mercato italiano" },
+        { name: "Shopify", desc: "Piattaforme complete ottimizzate per vendite Italia" },
+        { name: "Custom", desc: "E-commerce personalizzato per normative italiane" }
       ]
     },
     {
       icon: Zap,
-      title: "Applicazioni Web",
-      description: "Sviluppiamo applicazioni web su misura per ottimizzare i processi aziendali.",
-      features: ["Architettura scalabile", "Interfacce intuitive", "Integrazione API", "Sicurezza avanzata"],
+      title: "Applicazioni Web su Misura per il Business",
+      description: "Sviluppiamo applicazioni web personalizzate per ottimizzare i processi aziendali di aziende italiane, rispettando normative locali e integrandoci con sistemi esistenti.",
+      features: ["Architettura scalabile", "Conformità normative italiane", "Integrazione API locali", "Sicurezza avanzata GDPR"],
       types: [
-        { name: "Gestionali", desc: "Software per la gestione aziendale" },
-        { name: "CRM", desc: "Sistemi di gestione clienti" },
-        { name: "Portali", desc: "Piattaforme web collaborative" }
+        { name: "Gestionali", desc: "Software gestione aziendale per normative italiane" },
+        { name: "CRM", desc: "Sistemi gestione clienti per PMI italiane" },
+        { name: "Portali", desc: "Piattaforme web collaborative conformi GDPR" }
       ]
     },
     {
       icon: Palette,
-      title: "UX/UI Design",
-      description: "Progettiamo interfacce belle e funzionali che offrono un'esperienza utente ottimale.",
-      features: ["User research", "Wireframe e mockup", "Prototipazione", "Design system"],
+      title: "UX/UI Design Professionale",
+      description: "Progettiamo interfacce belle e funzionali che offrono un'esperienza utente ottimale, studiando il comportamento degli utenti italiani e le tendenze del mercato locale.",
+      features: ["User research mercato italiano", "Wireframe e mockup", "Prototipazione avanzata", "Design system scalabile"],
       types: [
-        { name: "Web Design", desc: "Design per siti web e applicazioni" },
-        { name: "Mobile Design", desc: "Interfacce per dispositivi mobili" },
-        { name: "Brand Identity", desc: "Identità visiva coordinata" }
+        { name: "Web Design", desc: "Design ottimizzato per utenti italiani" },
+        { name: "Mobile Design", desc: "Interfacce mobile-first per Italia" },
+        { name: "Brand Identity", desc: "Identità visiva per mercato italiano" }
       ]
     }
   ];
@@ -66,23 +83,23 @@ const Servizi = () => {
   const additionalServices = [
     {
       icon: Search,
-      title: "SEO Tecnico",
-      description: "Ottimizziamo la struttura tecnica del tuo sito per migliorare il posizionamento sui motori di ricerca."
+      title: "SEO Locale per Aziende Italiane",
+      description: "Ottimizziamo il tuo sito per le ricerche geo-localizzate italiane, migliorando il posizionamento su Google Italia."
     },
     {
       icon: Monitor,
-      title: "Hosting e Manutenzione",
-      description: "Servizi di hosting professionale e manutenzione continua per garantire prestazioni ottimali."
+      title: "Hosting Italia e Manutenzione",
+      description: "Servizi di hosting su server italiani e manutenzione continua per garantire prestazioni ottimali per utenti italiani."
     },
     {
       icon: Smartphone,
-      title: "Ottimizzazione Mobile",
-      description: "Rendiamo il tuo sito perfettamente fruibile su tutti i dispositivi mobili."
+      title: "Ottimizzazione Mobile Italia",
+      description: "Rendiamo il tuo sito perfetto per dispositivi mobili, ottimizzato per la velocità di connessione italiana."
     },
     {
       icon: Globe,
-      title: "Consulenza Digitale",
-      description: "Ti guidiamo nella definizione di una strategia digitale efficace per il tuo business."
+      title: "Consulenza Digitale per PMI",
+      description: "Ti guidiamo nella definizione di strategie digitali efficaci specifiche per il mercato e le normative italiane."
     }
   ];
 
@@ -105,13 +122,29 @@ const Servizi = () => {
         <div className="container mx-auto px-4 lg:px-6">
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-              I nostri <span className="bg-gradient-to-r from-optix-blue to-optix-green bg-clip-text text-transparent">servizi</span>
+              I Nostri Servizi Web Professionali per Aziende Italiane
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Offriamo soluzioni digitali complete per trasformare la tua presenza online 
-              e far crescere il tuo business. Dalla progettazione allo sviluppo, 
-              ti accompagniamo in ogni fase del tuo percorso digitale.
+              <strong>40 esperti web</strong> con <strong>12+ anni di esperienza</strong> offrono soluzioni digitali complete 
+              per <strong>aziende italiane</strong>. Dalla progettazione allo sviluppo, 
+              ti accompagniamo in ogni fase del tuo percorso digitale nel <strong>mercato italiano</strong>.
             </p>
+            
+            {/* Social Proof */}
+            <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
+                <span><strong>200+</strong> aziende italiane servite</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Star className="w-4 h-4 text-yellow-500" />
+                <span><strong>12+</strong> anni nel mercato italiano</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span><strong>40</strong> esperti certificati</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -147,7 +180,7 @@ const Servizi = () => {
                   
                   <Button asChild className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white">
                     <Link to="/contatti">
-                      Richiedi preventivo
+                      Consulenza Gratuita - Preventivo in 24h
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -176,11 +209,11 @@ const Servizi = () => {
         <div className="container mx-auto px-4 lg:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-              Servizi aggiuntivi
+              Servizi Specializzati per il Mercato Italiano
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Completiamo la tua presenza digitale con servizi specializzati 
-              per garantire prestazioni ottimali e risultati duraturi.
+              Completiamo la tua presenza digitale con servizi specializzati per il <strong>mercato italiano</strong>, 
+              garantendo conformità normative e prestazioni ottimali per <strong>aziende italiane</strong>.
             </p>
           </div>
           
@@ -242,7 +275,7 @@ const Servizi = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" variant="secondary" className="bg-white text-optix-blue hover:bg-white/90">
               <Link to="/contatti">
-                Consulenza gratuita
+                Consulenza Gratuita - Solo Aziende Italiane
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
