@@ -21,7 +21,7 @@ interface BlogPost {
   profiles: {
     first_name: string;
     last_name: string;
-  };
+  } | null;
 }
 
 const Index = () => {
@@ -340,8 +340,12 @@ const Index = () => {
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
                       <Calendar className="h-4 w-4" />
                       <time>{new Date(post.created_at).toLocaleDateString('it-IT')}</time>
-                      <span>•</span>
-                      <span>di {post.profiles.first_name} {post.profiles.last_name}</span>
+                      {post.profiles && (
+                        <>
+                          <span>•</span>
+                          <span>di {post.profiles.first_name} {post.profiles.last_name}</span>
+                        </>
+                      )}
                     </div>
                     
                     <h3 className="font-bold text-lg mb-3 group-hover:text-optix-blue transition-colors duration-300 line-clamp-2">
