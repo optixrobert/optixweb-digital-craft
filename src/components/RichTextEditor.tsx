@@ -1,5 +1,6 @@
-import { useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+import { useMemo } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { Label } from '@/components/ui/label';
 
 interface RichTextEditorProps {
@@ -21,202 +22,191 @@ export default function RichTextEditor({
   disabled = false,
   error
 }: RichTextEditorProps) {
-  const editorRef = useRef<any>(null);
 
-  const handleEditorChange = (content: string) => {
-    onChange(content);
-  };
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'font': [] }, { 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'direction': 'rtl' }],
+        [{ 'align': [] }],
+        ['blockquote', 'code-block'],
+        ['link', 'image', 'video'],
+        ['clean']
+      ]
+    },
+    clipboard: {
+      matchVisual: false,
+    }
+  }), []);
+
+  const formats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike',
+    'color', 'background',
+    'script',
+    'list', 'bullet', 'check',
+    'indent',
+    'direction', 'align',
+    'blockquote', 'code-block',
+    'link', 'image', 'video'
+  ];
 
   return (
     <div className="space-y-2">
       {label && <Label>{label}</Label>}
-      <div className="border rounded-md overflow-hidden">
-        <Editor
-          apiKey="nh561evwfc11hzmm00r0sby4o77ba4mg01iyv6czacdc0w6g"
-          onInit={(evt, editor) => editorRef.current = editor}
+      <div 
+        className="border rounded-md overflow-hidden bg-background"
+        style={{ height: height }}
+      >
+        <ReactQuill
+          theme="snow"
           value={value}
-          onEditorChange={handleEditorChange}
-          disabled={disabled}
-          init={{
-            height,
-            menubar: true,
-            plugins: [
-              'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-              'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-              'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount',
-              'emoticons', 'codesample', 'hr', 'pagebreak', 'nonbreaking',
-              'visualchars', 'paste', 'textpattern', 'imagetools', 'textcolor',
-              'colorpicker', 'fontselect', 'fontsizeselect', 'lineheight'
-            ],
-            toolbar: [
-              'undo redo | formatselect fontselect fontsizeselect | bold italic underline strikethrough',
-              'forecolor backcolor | alignleft aligncenter alignright alignjustify | lineheight',
-              'outdent indent | numlist bullist | link image media table',
-              'codesample blockquote hr pagebreak | removeformat | fullscreen preview code',
-              'emoticons charmap | customButton | help'
-            ].join(' | '),
-            content_style: `
-              body { 
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
-                font-size: 14px;
-                line-height: 1.6;
-                color: #333;
-                margin: 1rem;
-              }
-              h1, h2, h3, h4, h5, h6 {
-                color: #2563eb;
-                margin-bottom: 0.5rem;
-                margin-top: 1rem;
-              }
-              h1 { font-size: 2rem; }
-              h2 { font-size: 1.75rem; }
-              h3 { font-size: 1.5rem; }
-              h4 { font-size: 1.25rem; }
-              h5 { font-size: 1.1rem; }
-              h6 { font-size: 1rem; }
-              p { margin-bottom: 1rem; }
-              ul, ol { margin-bottom: 1rem; padding-left: 2rem; }
-              li { margin-bottom: 0.25rem; }
-              blockquote {
-                border-left: 4px solid #2563eb;
-                margin: 1rem 0;
-                padding-left: 1rem;
-                font-style: italic;
-                background-color: #f8fafc;
-                padding: 1rem;
-                border-radius: 0.25rem;
-              }
-              pre {
-                background-color: #1e293b;
-                color: #e2e8f0;
-                padding: 1rem;
-                border-radius: 0.5rem;
-                overflow-x: auto;
-                margin: 1rem 0;
-              }
-              code {
-                background-color: #f1f5f9;
-                padding: 0.125rem 0.25rem;
-                border-radius: 0.25rem;
-                font-size: 0.875rem;
-              }
-              table {
-                border-collapse: collapse;
-                width: 100%;
-                margin: 1rem 0;
-              }
-              table, th, td {
-                border: 1px solid #e2e8f0;
-              }
-              th, td {
-                padding: 0.5rem;
-                text-align: left;
-              }
-              th {
-                background-color: #f8fafc;
-                font-weight: bold;
-              }
-              img {
-                max-width: 100%;
-                height: auto;
-                border-radius: 0.5rem;
-                margin: 1rem 0;
-              }
-              a {
-                color: #2563eb;
-                text-decoration: underline;
-              }
-              a:hover {
-                color: #1d4ed8;
-              }
-            `,
-            placeholder,
-            branding: false,
-            resize: false,
-            elementpath: false,
-            statusbar: true,
-            paste_data_images: true,
-            images_upload_handler: (blobInfo: any, progress: any) => {
-              return new Promise((resolve, reject) => {
-                // Per ora convertiremo l'immagine in base64
-                const reader = new FileReader();
-                reader.onload = () => {
-                  resolve(reader.result as string);
-                };
-                reader.onerror = () => {
-                  reject('Errore nel caricamento dell\'immagine');
-                };
-                reader.readAsDataURL(blobInfo.blob());
-              });
-            },
-            image_advtab: true,
-            image_uploadtab: true,
-            media_live_embeds: true,
-            media_url_resolver: (data: any, resolve: any) => {
-              // Gestione automatica per YouTube, Vimeo, etc.
-              if (data.url.includes('youtube.com') || data.url.includes('youtu.be')) {
-                let videoId = '';
-                if (data.url.includes('youtube.com')) {
-                  videoId = data.url.split('v=')[1]?.split('&')[0];
-                } else {
-                  videoId = data.url.split('youtu.be/')[1]?.split('?')[0];
-                }
-                if (videoId) {
-                  resolve({
-                    html: `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`
-                  });
-                }
-              }
-              resolve({ html: '' });
-            },
-            table_responsive_width: true,
-            table_default_attributes: {
-              border: '1'
-            },
-            table_default_styles: {
-              'border-collapse': 'collapse',
-              'width': '100%'
-            },
-            link_default_target: '_blank',
-            target_list: [
-              { title: 'Stessa finestra', value: '_self' },
-              { title: 'Nuova finestra', value: '_blank' }
-            ],
-            codesample_languages: [
-              { text: 'HTML/XML', value: 'markup' },
-              { text: 'JavaScript', value: 'javascript' },
-              { text: 'CSS', value: 'css' },
-              { text: 'PHP', value: 'php' },
-              { text: 'Python', value: 'python' },
-              { text: 'Java', value: 'java' },
-              { text: 'C', value: 'c' },
-              { text: 'C#', value: 'csharp' },
-              { text: 'C++', value: 'cpp' },
-              { text: 'SQL', value: 'sql' },
-              { text: 'JSON', value: 'json' }
-            ],
-            setup: (editor) => {
-              // Aggiungiamo alcuni pulsanti personalizzati
-              editor.ui.registry.addButton('customButton', {
-                text: 'Inserisci CTA',
-                tooltip: 'Inserisci call-to-action',
-                onAction: () => {
-                  editor.insertContent(`
-                    <div style="background: linear-gradient(135deg, #3b82f6, #10b981); color: white; padding: 1.5rem; border-radius: 0.5rem; text-align: center; margin: 1.5rem 0;">
-                      <h3 style="color: white; margin-bottom: 0.5rem;">Hai bisogno di aiuto?</h3>
-                      <p style="margin-bottom: 1rem;">Contattaci per una consulenza gratuita</p>
-                      <a href="/contatti" style="background: rgba(255,255,255,0.2); color: white; padding: 0.75rem 1.5rem; border-radius: 0.25rem; text-decoration: none; font-weight: bold;">Contattaci</a>
-                    </div>
-                  `);
-                }
-              });
-            }
+          onChange={onChange}
+          modules={modules}
+          formats={formats}
+          placeholder={placeholder}
+          readOnly={disabled}
+          style={{
+            height: height - 42, // Account for toolbar height
+            fontFamily: 'inherit'
           }}
         />
       </div>
       {error && (
         <p className="text-sm text-destructive">{error}</p>
       )}
+      
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .ql-toolbar {
+            border-bottom: 1px solid hsl(var(--border));
+            border-top: none;
+            border-left: none;
+            border-right: none;
+          }
+          
+          .ql-container {
+            border: none;
+            font-family: inherit;
+          }
+          
+          .ql-editor {
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+          }
+          
+          .ql-editor.ql-blank::before {
+            color: hsl(var(--muted-foreground));
+            font-style: italic;
+          }
+          
+          .ql-editor h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: hsl(var(--foreground));
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+          
+          .ql-editor h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: hsl(var(--foreground));
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+          
+          .ql-editor h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: hsl(var(--foreground));
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+          
+          .ql-editor h4 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: hsl(var(--foreground));
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+          
+          .ql-editor h5 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: hsl(var(--foreground));
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+          
+          .ql-editor h6 {
+            font-size: 1rem;
+            font-weight: bold;
+            color: hsl(var(--foreground));
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+          
+          .ql-editor p {
+            margin-bottom: 1rem;
+          }
+          
+          .ql-editor ul, .ql-editor ol {
+            margin-bottom: 1rem;
+          }
+          
+          .ql-editor blockquote {
+            border-left: 4px solid hsl(var(--primary));
+            margin: 1rem 0;
+            padding-left: 1rem;
+            font-style: italic;
+            background-color: hsl(var(--muted));
+            padding: 1rem;
+            border-radius: 0.25rem;
+          }
+          
+          .ql-editor pre {
+            background-color: hsl(var(--muted));
+            color: hsl(var(--foreground));
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+          }
+          
+          .ql-editor code {
+            background-color: hsl(var(--muted));
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+          }
+          
+          .ql-editor img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+          }
+          
+          .ql-editor a {
+            color: hsl(var(--primary));
+            text-decoration: underline;
+          }
+          
+          .ql-editor a:hover {
+            color: hsl(var(--primary));
+            opacity: 0.8;
+          }
+        `
+      }} />
     </div>
   );
 }
