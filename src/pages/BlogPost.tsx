@@ -131,7 +131,7 @@ const BlogPost = () => {
         <div className="max-w-4xl mx-auto">
           {/* Back button */}
           <Button variant="ghost" asChild className="mb-8">
-            <Link to="/">
+            <Link to="/blog">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Torna al blog
             </Link>
