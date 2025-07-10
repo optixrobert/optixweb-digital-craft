@@ -265,6 +265,11 @@ const Portfolio = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <a href="https://wa.me/393532004367?text=Ciao!%20Vorrei%20informazioni%20per%20un%20nuovo%20progetto" target="_blank">
+                WhatsApp Diretto
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
               <Link to="/servizi">
                 Scopri i nostri servizi
               </Link>

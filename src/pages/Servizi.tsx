@@ -280,6 +280,11 @@ const Servizi = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <a href="https://wa.me/393532004367?text=Ciao!%20Vorrei%20parlare%20dei%20vostri%20servizi%20web" target="_blank">
+                WhatsApp Diretto
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
               <Link to="/portfolio">
                 Vedi esempi di progetti
               </Link>

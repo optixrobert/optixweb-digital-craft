@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CalendarBooking from "@/components/CalendarBooking";
@@ -26,10 +28,22 @@ const Prenota = () => {
                 Prenota una Consulenza Gratuita
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
               Parla direttamente con i nostri esperti per discutere del tuo progetto digitale. 
               La consulenza è completamente gratuita e senza impegno.
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white">
+                <Link to="/contatti">
+                  Contattaci Ora
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="border-optix-blue text-optix-blue hover:bg-optix-light">
+                <a href="https://wa.me/393532004367?text=Ciao!%20Vorrei%20prenotare%20una%20consulenza%20gratuita" target="_blank">
+                  WhatsApp Diretto
+                </a>
+              </Button>
+            </div>
           </div>
           
           <CalendarBooking />

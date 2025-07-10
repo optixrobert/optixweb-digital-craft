@@ -114,9 +114,21 @@ const Blog = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
               Il Nostro Blog
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               Approfondimenti, guide e consigli per agenzie e clienti nel mondo dello sviluppo web e del design digitale.
             </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="bg-gradient-to-r from-optix-blue to-optix-green hover:from-optix-blue/90 hover:to-optix-green/90 text-white">
+                <Link to="/contatti">
+                  Consulenza Gratuita
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="border-optix-blue text-optix-blue hover:bg-optix-light">
+                <a href="https://wa.me/393532004367?text=Ciao!%20Ho%20letto%20il%20vostro%20blog%20e%20vorrei%20informazioni" target="_blank">
+                  WhatsApp Diretto
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

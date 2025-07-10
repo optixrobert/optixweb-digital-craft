@@ -357,9 +357,14 @@ const Contatti = () => {
               </a>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-              <a href="tel:+39123456790">
+              <a href="tel:+393532004367">
                 <Phone className="mr-2 h-4 w-4" />
                 Chiamaci ora
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <a href="https://wa.me/393532004367?text=Ciao!%20Vorrei%20parlare%20con%20voi%20tramite%20WhatsApp" target="_blank">
+                WhatsApp Diretto
               </a>
             </Button>
           </div>

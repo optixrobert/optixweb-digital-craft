@@ -243,6 +243,11 @@ const ChiSiamo = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="border-optix-blue text-optix-blue hover:bg-optix-light">
+              <a href="https://wa.me/393532004367?text=Ciao!%20Ho%20visto%20la%20vostra%20azienda%20e%20vorrei%20parlare%20con%20voi" target="_blank">
+                WhatsApp Diretto
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-optix-blue text-optix-blue hover:bg-optix-light">
               <Link to="/portfolio">
                 Vedi i nostri progetti
               </Link>
