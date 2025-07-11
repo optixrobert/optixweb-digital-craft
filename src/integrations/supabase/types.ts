@@ -62,6 +62,47 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_analytics: {
+        Row: {
+          blog_post_id: string | null
+          created_at: string
+          id: string
+          referrer: string | null
+          scroll_percentage: number | null
+          session_id: string | null
+          time_spent: number | null
+          visitor_ip: string | null
+        }
+        Insert: {
+          blog_post_id?: string | null
+          created_at?: string
+          id?: string
+          referrer?: string | null
+          scroll_percentage?: number | null
+          session_id?: string | null
+          time_spent?: number | null
+          visitor_ip?: string | null
+        }
+        Update: {
+          blog_post_id?: string | null
+          created_at?: string
+          id?: string
+          referrer?: string | null
+          scroll_percentage?: number | null
+          session_id?: string | null
+          time_spent?: number | null
+          visitor_ip?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_analytics_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_posts: {
         Row: {
           author_id: string
@@ -553,6 +594,39 @@ export type Database = {
             referencedColumns: ["user_id"]
           },
         ]
+      }
+      website_analytics: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          referrer: string | null
+          session_id: string | null
+          user_agent: string | null
+          visit_duration: number | null
+          visitor_ip: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path: string
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          visit_duration?: number | null
+          visitor_ip?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          referrer?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+          visit_duration?: number | null
+          visitor_ip?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {
