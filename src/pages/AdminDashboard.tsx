@@ -10,8 +10,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LogOut, Users, Ticket, AlertCircle, CheckCircle, FileText, Plus, Edit, Trash2, Mail, MessageSquare, Building2 } from 'lucide-react';
 import BlogPostDialog from '@/components/BlogPostDialog';
 import ClientDialog from '@/components/ClientDialog';
-import IndexNowSubmitter from '@/components/IndexNowSubmitter';
-import { useIndexNowIntegration } from '@/hooks/useIndexNowIntegration';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
@@ -145,8 +143,6 @@ export default function AdminDashboard() {
   const [showClientDialog, setShowClientDialog] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
 
-  // Initialize IndexNow integration
-  useIndexNowIntegration();
 
   useEffect(() => {
     if (!user) {
@@ -804,7 +800,9 @@ export default function AdminDashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <IndexNowSubmitter />
+                  <div className="p-4 text-center text-gray-500">
+                    Funzionalità IndexNow in fase di sviluppo
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -859,7 +857,6 @@ export default function AdminDashboard() {
               </Card>
             </TabsContent>
 
-            {/* Tickets */}
             <TabsContent value="tickets">
               <Card>
                 <CardHeader>
