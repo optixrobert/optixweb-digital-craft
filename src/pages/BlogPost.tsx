@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, User } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
+import { useBlogScrollTracking } from "@/hooks/useAnalytics";
 
 interface BlogPost {
   id: string;
@@ -28,6 +29,9 @@ const BlogPost = () => {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Attiva il tracking dello scroll per questo post (se il post è caricato)
+  useBlogScrollTracking(post?.id || '');
 
   const seoComponent = useSEO({
     title: post?.meta_title || post?.title || "Blog Post",

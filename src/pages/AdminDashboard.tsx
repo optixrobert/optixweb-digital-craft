@@ -248,13 +248,20 @@ export default function AdminDashboard() {
         supabase
           .from('website_analytics')
           .select('*')
-          .order('created_at', { ascending: false })
-          .limit(100),
+          .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()) // Ultimi 30 giorni
+          .order('created_at', { ascending: false }),
         supabase
           .from('blog_analytics')
-          .select('*')
+          .select(`
+            *,
+            blog_posts (
+              id,
+              title,
+              slug
+            )
+          `)
+          .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()) // Ultimi 30 giorni
           .order('created_at', { ascending: false })
-          .limit(100)
       ]);
 
       if (ticketsResponse.error) throw ticketsResponse.error;
