@@ -8,3 +8,9 @@ verify_jwt = true
 
 [functions.customer-portal]
 verify_jwt = true
+
+[functions.submit-to-indexnow]
+verify_jwt = false
+
+[functions.auto-submit-blog-indexnow]
+verify_jwt = false

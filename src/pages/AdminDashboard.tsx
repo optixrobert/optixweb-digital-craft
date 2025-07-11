@@ -10,6 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LogOut, Users, Ticket, AlertCircle, CheckCircle, FileText, Plus, Edit, Trash2, Mail, MessageSquare, Building2 } from 'lucide-react';
 import BlogPostDialog from '@/components/BlogPostDialog';
 import ClientDialog from '@/components/ClientDialog';
+import IndexNowSubmitter from '@/components/IndexNowSubmitter';
+import { useIndexNowIntegration } from '@/hooks/useIndexNowIntegration';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
@@ -142,6 +144,9 @@ export default function AdminDashboard() {
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [showClientDialog, setShowClientDialog] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
+
+  // Initialize IndexNow integration
+  useIndexNowIntegration();
 
   useEffect(() => {
     if (!user) {
@@ -480,6 +485,7 @@ export default function AdminDashboard() {
               <TabsTrigger value="consultations">Consulenze</TabsTrigger>
               <TabsTrigger value="clients">Gestione Clienti</TabsTrigger>
               <TabsTrigger value="blog">Gestione Blog</TabsTrigger>
+              <TabsTrigger value="indexnow">IndexNow</TabsTrigger>
               <TabsTrigger value="subscribers">Abbonamenti</TabsTrigger>
               <TabsTrigger value="tickets">Ticket Support</TabsTrigger>
             </TabsList>
@@ -785,7 +791,25 @@ export default function AdminDashboard() {
               </Card>
             </TabsContent>
 
-            {/* Subscribers */}
+            {/* IndexNow Tab */}
+            <TabsContent value="indexnow">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="h-5 w-5" />
+                    IndexNow - Notifica Motori di Ricerca
+                  </CardTitle>
+                  <CardDescription>
+                    Notifica istantaneamente Bing, Yandex e altri motori di ricerca delle modifiche alle pagine
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <IndexNowSubmitter />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Subscribers */
             <TabsContent value="subscribers">
               <Card>
                 <CardHeader>
