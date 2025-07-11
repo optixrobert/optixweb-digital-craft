@@ -143,7 +143,6 @@ export default function AdminDashboard() {
   const [showClientDialog, setShowClientDialog] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
 
-
   useEffect(() => {
     if (!user) {
       navigate('/auth');
@@ -481,7 +480,6 @@ export default function AdminDashboard() {
               <TabsTrigger value="consultations">Consulenze</TabsTrigger>
               <TabsTrigger value="clients">Gestione Clienti</TabsTrigger>
               <TabsTrigger value="blog">Gestione Blog</TabsTrigger>
-              <TabsTrigger value="indexnow">IndexNow</TabsTrigger>
               <TabsTrigger value="subscribers">Abbonamenti</TabsTrigger>
               <TabsTrigger value="tickets">Ticket Support</TabsTrigger>
             </TabsList>
@@ -787,27 +785,7 @@ export default function AdminDashboard() {
               </Card>
             </TabsContent>
 
-            {/* IndexNow Tab */}
-            <TabsContent value="indexnow">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileText className="h-5 w-5" />
-                    IndexNow - Notifica Motori di Ricerca
-                  </CardTitle>
-                  <CardDescription>
-                    Notifica istantaneamente Bing, Yandex e altri motori di ricerca delle modifiche alle pagine
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="p-4 text-center text-gray-500">
-                    Funzionalità IndexNow in fase di sviluppo
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Subscribers */
+            {/* Subscribers */}
             <TabsContent value="subscribers">
               <Card>
                 <CardHeader>
@@ -857,6 +835,7 @@ export default function AdminDashboard() {
               </Card>
             </TabsContent>
 
+            {/* Tickets */}
             <TabsContent value="tickets">
               <Card>
                 <CardHeader>
