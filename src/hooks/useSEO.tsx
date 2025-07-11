@@ -36,6 +36,7 @@ export const useSEO = ({
   const seoKeywords = keywords || DEFAULT_SEO.keywords;
   const seoImage = image || DEFAULT_SEO.image;
   const seoUrl = url || DEFAULT_SEO.url;
+  const seoCanonicalUrl = canonicalUrl || seoUrl;
 
   return (
     <Helmet>
@@ -50,7 +51,7 @@ export const useSEO = ({
       <meta name="geo.country" content="Italy" />
 
       {/* Canonical URL */}
-      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+      <link rel="canonical" href={seoCanonicalUrl} />
 
       {/* Open Graph Meta Tags */}
       <meta property="og:title" content={seoTitle} />
