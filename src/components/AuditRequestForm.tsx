@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Phone, Users, TrendingUp } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useWebhook } from "@/hooks/useWebhook";
 
 interface AuditRequestFormProps {
   sourceChannel?: string;
@@ -25,6 +26,7 @@ export function AuditRequestForm({ sourceChannel = "direct", landingPage = "home
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { sendLeadToCRM } = useWebhook();
 
   const variantConfig = {
     default: {
@@ -69,6 +71,22 @@ export function AuditRequestForm({ sourceChannel = "direct", landingPage = "home
         });
 
       if (error) throw error;
+
+      // Invia al CRM
+      try {
+        await sendLeadToCRM({
+          name: formData.nome,
+          email: '', // Non disponibile nel form audit
+          company: formData.azienda,
+          phone: formData.whatsapp,
+          message: `Obiettivo: ${formData.obiettivo_principale}`,
+          source: `optixweb.space - Audit ${variant}`
+        });
+        console.log('Lead audit sincronizzato con CRM');
+      } catch (crmError) {
+        console.error('Errore sincronizzazione CRM:', crmError);
+        // Non blocchiamo il flusso se il CRM fallisce
+      }
 
       // Traccia la conversione
       await supabase

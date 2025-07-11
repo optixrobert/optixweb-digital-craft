@@ -10,9 +10,11 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useSEO } from "@/hooks/useSEO";
+import { useWebhook } from "@/hooks/useWebhook";
 
 const Contatti = () => {
   const { toast } = useToast();
+  const { sendLeadToCRM } = useWebhook();
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -54,6 +56,22 @@ const Contatti = () => {
         ]);
 
       if (error) throw error;
+
+      // Invia al CRM
+      try {
+        await sendLeadToCRM({
+          name: formData.nome,
+          email: formData.email,
+          phone: formData.telefono,
+          company: formData.azienda,
+          message: `${formData.servizio ? `Servizio: ${formData.servizio}\n` : ''}${formData.messaggio}`,
+          source: 'optixweb.space - Contatti'
+        });
+        console.log('Lead sincronizzato con CRM');
+      } catch (crmError) {
+        console.error('Errore sincronizzazione CRM:', crmError);
+        // Non blocchiamo il flusso se il CRM fallisce
+      }
 
       toast({
         title: "Messaggio inviato!",
