@@ -13,6 +13,7 @@ import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useWebhook } from "@/hooks/useWebhook";
 
 interface BookingData {
   name: string;
@@ -38,6 +39,7 @@ const CalendarBooking = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { sendLeadToCRM } = useWebhook();
 
   const timeSlots = [
     "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
@@ -142,6 +144,22 @@ ${bookingData.message}
         ]);
 
       if (error) throw error;
+
+      // Invia al CRM
+      try {
+        await sendLeadToCRM({
+          name: bookingData.name,
+          email: bookingData.email,
+          phone: bookingData.phone,
+          company: bookingData.company,
+          message: `Tipo: ${consultationTypes.find(t => t.value === bookingData.consultationType)?.label}\nData: ${bookingData.date ? format(bookingData.date, "PPP", { locale: it }) : ''} ${bookingData.time}\n\n${bookingData.message}`,
+          source: 'optixweb.space - Prenotazione Consulenza'
+        });
+        console.log('Lead consulenza sincronizzato con CRM');
+      } catch (crmError) {
+        console.error('Errore sincronizzazione CRM:', crmError);
+        // Non blocchiamo il flusso se il CRM fallisce
+      }
 
       toast({
         title: "Richiesta inviata!",
