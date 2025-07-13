@@ -5,7 +5,7 @@ import { crypto } from "https://deno.land/std@0.168.0/crypto/mod.ts";
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
 };
 
 serve(async (req) => {
@@ -13,7 +13,7 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  if (req.method !== 'POST') {
+  if (req.method !== 'POST' && req.method !== 'GET') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -26,7 +26,7 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    // Verifica API key
+    // Verifica API key (comune per GET e POST)
     const authHeader = req.headers.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return new Response(JSON.stringify({ error: 'Missing or invalid Authorization header' }), {
@@ -66,7 +66,55 @@ serve(async (req) => {
       .update({ last_used_at: new Date().toISOString() })
       .eq('key_hash', keyHash);
 
-    // Leggi i dati del ticket dalla richiesta
+    // Handle GET requests to fetch all tickets
+    if (req.method === 'GET') {
+      console.log('Fetching tickets for API key:', apiKeyRecord.name);
+
+      // Fetch all tickets with profile information
+      const { data: tickets, error: ticketsError } = await supabase
+        .from('tickets')
+        .select(`
+          *,
+          profiles!tickets_user_id_fkey(email, first_name, last_name, company)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (ticketsError) {
+        console.error('Error fetching tickets:', ticketsError);
+        return new Response(JSON.stringify({ error: 'Failed to fetch tickets' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Transform tickets to match expected format
+      const transformedTickets = tickets.map(ticket => ({
+        id: ticket.id,
+        title: ticket.title,
+        description: ticket.description,
+        customer_name: ticket.profiles ? `${ticket.profiles.first_name || ''} ${ticket.profiles.last_name || ''}`.trim() : '',
+        customer_email: ticket.profiles?.email || '',
+        customer_company: ticket.profiles?.company || '',
+        priority: ticket.priority || 'medium',
+        status: ticket.status || 'open',
+        category: ticket.category || 'general',
+        created_at: ticket.created_at,
+        updated_at: ticket.updated_at,
+        user_id: ticket.user_id
+      }));
+
+      console.log(`Returning ${transformedTickets.length} tickets`);
+
+      return new Response(JSON.stringify({
+        success: true,
+        count: transformedTickets.length,
+        tickets: transformedTickets
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Handle POST requests to create tickets
     const ticketData = await req.json();
     
     console.log('Received ticket data:', ticketData);
