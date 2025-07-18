@@ -82,39 +82,102 @@ export const useSEO = ({
 // Structured Data Templates
 export const createWebsiteStructuredData = () => ({
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "LocalBusiness"],
   "name": "Optixweb.space",
-  "description": "Web agency italiana specializzata in realizzazione siti web professionali e sviluppo applicazioni web custom",
+  "alternateName": "OptixWeb",
+  "description": "Web agency italiana specializzata in realizzazione siti web professionali, sviluppo applicazioni web custom e soluzioni e-commerce per PMI e startup",
   "url": "https://optixweb.space",
-  "logo": "https://optixweb.space/logo.png",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+39-XXX-XXXXXXX",
-    "contactType": "customer service",
-    "areaServed": "IT",
-    "availableLanguage": "Italian"
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://optixweb.space/src/assets/optixweb-logo.png",
+    "width": 200,
+    "height": 200
   },
+  "image": "https://optixweb.space/src/assets/hero-image.jpg",
+  "founder": {
+    "@type": "Person",
+    "name": "OptixWeb Team"
+  },
+  "foundingDate": "2012",
+  "numberOfEmployees": "40+",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+39-353-200-4367",
+      "contactType": "customer service",
+      "areaServed": "IT",
+      "availableLanguage": ["Italian", "English"],
+      "contactOption": "TollFree"
+    },
+    {
+      "@type": "ContactPoint",
+      "url": "https://wa.me/393532004367",
+      "contactType": "customer service",
+      "areaServed": "IT",
+      "availableLanguage": "Italian"
+    }
+  ],
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "IT",
-    "addressLocality": "Italia"
+    "addressLocality": "Italia",
+    "addressRegion": "Italia"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "41.9028",
+    "longitude": "12.4964"
   },
   "sameAs": [
     "https://www.linkedin.com/company/optixweb",
     "https://www.facebook.com/optixweb",
-    "https://twitter.com/optixweb"
+    "https://twitter.com/optixweb",
+    "https://wa.me/393532004367"
   ],
-  "services": [
-    "Realizzazione siti web",
-    "Sviluppo applicazioni web",
-    "E-commerce",
-    "SEO e ottimizzazione",
-    "UX/UI Design",
-    "Consulenza digitale"
-  ]
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Servizi Web Professionali",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Realizzazione Siti Web",
+          "description": "Siti web professionali responsive e ottimizzati per la conversione"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Sviluppo E-commerce",
+          "description": "Negozi online performanti con Shopify, PrestaShop e WooCommerce"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Sviluppo Applicazioni Web",
+          "description": "Applicazioni web custom per ottimizzare i processi aziendali"
+        }
+      }
+    ]
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "200",
+    "bestRating": "5"
+  },
+  "priceRange": "€€",
+  "serviceArea": {
+    "@type": "Country",
+    "name": "Italia"
+  }
 });
 
-export const createServiceStructuredData = (serviceName: string, description: string) => ({
+export const createServiceStructuredData = (serviceName: string, description: string, price?: string) => ({
   "@context": "https://schema.org",
   "@type": "Service",
   "name": serviceName,
@@ -122,8 +185,71 @@ export const createServiceStructuredData = (serviceName: string, description: st
   "provider": {
     "@type": "Organization",
     "name": "Optixweb.space",
-    "url": "https://optixweb.space"
+    "url": "https://optixweb.space",
+    "logo": "https://optixweb.space/src/assets/optixweb-logo.png"
   },
-  "areaServed": "IT",
-  "availableLanguage": "Italian"
+  "areaServed": {
+    "@type": "Country",
+    "name": "Italia"
+  },
+  "availableLanguage": "Italian",
+  "serviceType": "Web Development",
+  "category": "Technology",
+  ...(price && {
+    "offers": {
+      "@type": "Offer",
+      "price": price,
+      "priceCurrency": "EUR",
+      "availability": "InStock"
+    }
+  })
+});
+
+export const createBreadcrumbStructuredData = (breadcrumbs: Array<{name: string, url: string}>) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbs.map((crumb, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": crumb.name,
+    "item": crumb.url
+  }))
+});
+
+export const createFAQStructuredData = (faqs: Array<{question: string, answer: string}>) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+});
+
+export const createReviewStructuredData = (reviews: Array<{
+  author: string,
+  rating: number,
+  text: string,
+  datePublished: string
+}>) => ({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Optixweb.space",
+  "review": reviews.map(review => ({
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": review.author
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": review.rating,
+      "bestRating": "5"
+    },
+    "reviewBody": review.text,
+    "datePublished": review.datePublished
+  }))
 });

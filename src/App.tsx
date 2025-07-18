@@ -26,6 +26,7 @@ import Privacy from "./pages/Privacy";
 import ScrollToTop from "./components/ScrollToTop";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
+import ServiziFAQ from "./pages/ServiziFAQ";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/chi-siamo" element={<ChiSiamo />} />
               <Route path="/servizi" element={<Servizi />} />
+              <Route path="/servizi/faq" element={<ServiziFAQ />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contatti" element={<Contatti />} />
               <Route path="/prenota" element={<Prenota />} />
