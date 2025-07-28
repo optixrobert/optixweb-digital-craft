@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { GA4Provider } from "@/components/GA4Provider";
 import Index from "./pages/Index";
@@ -41,6 +41,9 @@ const App = () => (
           <GA4Provider>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/home" element={<Navigate to="/" replace />} />
+              <Route path="/index" element={<Navigate to="/" replace />} />
+              <Route path="/index.html" element={<Navigate to="/" replace />} />
               <Route path="/chi-siamo" element={<ChiSiamo />} />
               <Route path="/servizi" element={<Servizi />} />
               <Route path="/servizi/faq" element={<ServiziFAQ />} />
@@ -53,10 +56,10 @@ const App = () => (
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/bandi-digitali" element={<BandiDigitali />} />
-          <Route path="/bandi-digitali/simest-transizione-digitale" element={<SimestTransizioneDigitale />} />
-          <Route path="/bandi-digitali/voucher-digitalizzazione" element={<VoucherDigitalizzazione />} />
-          <Route path="/bandi-digitali/credito-imposta-formazione" element={<CreditoImposta />} />
+              <Route path="/bandi-digitali" element={<BandiDigitali />} />
+              <Route path="/bandi-digitali/simest-transizione-digitale" element={<SimestTransizioneDigitale />} />
+              <Route path="/bandi-digitali/voucher-digitalizzazione" element={<VoucherDigitalizzazione />} />
+              <Route path="/bandi-digitali/credito-imposta-formazione" element={<CreditoImposta />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/landing/:slug" element={<LandingPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

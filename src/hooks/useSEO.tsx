@@ -45,10 +45,12 @@ export const useSEO = ({
       <meta name="description" content={seoDescription} />
       <meta name="keywords" content={seoKeywords} />
       <meta name="author" content="Optixweb.space" />
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       <meta name="language" content="it-IT" />
       <meta name="geo.region" content="IT" />
       <meta name="geo.country" content="Italy" />
+      <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="bingbot" content="index, follow" />
 
       {/* Canonical URL */}
       <link rel="canonical" href={seoCanonicalUrl} />
