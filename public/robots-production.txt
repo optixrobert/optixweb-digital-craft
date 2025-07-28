@@ -1,0 +1,72 @@
+User-agent: *
+Allow: /
+
+# Prioritize key landing pages
+Allow: /servizi
+Allow: /portfolio  
+Allow: /chi-siamo
+Allow: /contatti
+Allow: /prenota
+Allow: /blog
+
+# Disallow admin and private areas
+Disallow: /admin
+Disallow: /area-clienti
+Disallow: /auth
+Disallow: /admin-login
+
+# Allow specific high-value bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Block resource-intensive crawlers
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: dotbot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Sitemaps - Multiple for better indexing
+Sitemap: https://optixweb.space/sitemap.xml
+Sitemap: https://optixweb.space/sitemap-blogs.xml
+Sitemap: https://optixweb.space/sitemap-advanced.xml
+
+# Global crawl delay
+Crawl-delay: 1
+
+# Host directive for canonical domain
+Host: optixweb.space
+
+# Cache-friendly for search engines
+Request-rate: 1/10s

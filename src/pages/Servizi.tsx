@@ -6,32 +6,48 @@ import { ArrowRight, Code, ShoppingCart, Palette, Search, Zap, Monitor, Smartpho
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useSEO, createServiceStructuredData } from "@/hooks/useSEO";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { FAQ } from "@/components/FAQ";
 
 const Servizi = () => {
   const seoComponent = useSEO({
     title: "Servizi Web Professionali Italia | Optix Web - Siti, E-commerce, Applicazioni",
     description: "Servizi web professionali per aziende italiane: sviluppo siti web, e-commerce, applicazioni personalizzate. 40 esperti con 12+ anni di esperienza. Consulenza gratuita.",
-    keywords: "servizi web Italia, sviluppo siti web aziende, e-commerce personalizzato Italia, applicazioni web su misura, web agency professionale, servizi digitali aziende italiane",
+    keywords: "servizi web Italia, sviluppo siti web aziende, e-commerce personalizzato Italia, applicazioni web su misura, web agency professionale, servizi digitali aziende italiane, realizzazione siti web professionali, agenzia web italiana, sviluppo e-commerce Italia, consulenza digitale PMI",
     canonicalUrl: "https://optixweb.space/servizi",
-    structuredData: {
-      "@context": "https://schema.org",
-      "@type": "Service", 
-      "name": "Servizi Web Professionali",
-      "provider": {
-        "@type": "Organization",
-        "name": "Optix Web",
-        "areaServed": "IT"
-      },
-      "serviceType": [
-        "Sviluppo siti web aziende",
-        "E-commerce personalizzato",
-        "Applicazioni web su misura",
-        "UX/UI Design professionale",
-        "SEO locale Italia"
-      ],
-      "description": "Servizi web completi per aziende italiane con 40 esperti e 12+ anni di esperienza"
-    }
+    structuredData: createServiceStructuredData(
+      "Servizi Web Professionali per Aziende Italiane",
+      "Servizi web completi per aziende italiane: sviluppo siti web professionali, e-commerce personalizzati, applicazioni su misura. 40 esperti con 12+ anni di esperienza nel mercato italiano.",
+      "€1500"
+    )
   });
+
+  const breadcrumbItems = [
+    { name: "Servizi Web", url: "https://optixweb.space/servizi" }
+  ];
+
+  const serviceFAQs = [
+    {
+      question: "Quanto costa sviluppare un sito web professionale per aziende italiane?",
+      answer: "I costi variano da €1.500 per un sito vetrina professionale a €15.000+ per e-commerce avanzati. Offriamo sempre preventivi gratuiti personalizzati per aziende italiane con analisi dettagliata delle necessità specifiche."
+    },
+    {
+      question: "Quanto tempo ci vuole per realizzare un sito web aziendale?",
+      answer: "Un sito web professionale richiede 2-6 settimane, un e-commerce 4-12 settimane. I tempi dipendono dalla complessità e dalle funzionalità richieste. Garantiamo sempre il rispetto delle scadenze concordate."
+    },
+    {
+      question: "I vostri siti web sono ottimizzati per Google Italia?",
+      answer: "Sì, tutti i nostri siti includono ottimizzazione SEO per Google Italia: keywords locali, velocità di caricamento, responsive design, conformità alle linee guida di Google per il mercato italiano."
+    },
+    {
+      question: "Fornite assistenza tecnica dopo il lancio del sito?",
+      answer: "Sì, offriamo pacchetti di manutenzione con assistenza tecnica in italiano, aggiornamenti di sicurezza, backup automatici e supporto prioritario per tutti i nostri clienti italiani."
+    },
+    {
+      question: "Sviluppate anche applicazioni web personalizzate per aziende?",
+      answer: "Sì, sviluppiamo applicazioni web su misura per automatizzare processi aziendali, CRM personalizzati, gestionali conformi alle normative italiane e portali aziendali scalabili."
+    }
+  ];
 
   const mainServices = [
     {
@@ -116,6 +132,10 @@ const Servizi = () => {
     <div className="min-h-screen bg-background">
       {seoComponent}
       <Header />
+      
+      <div className="container mx-auto px-4 lg:px-6 pt-8">
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
       
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-optix-light via-background to-optix-light py-20 lg:py-32">
@@ -290,6 +310,16 @@ const Servizi = () => {
               </Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 lg:px-6">
+          <FAQ 
+            title="Domande Frequenti sui Nostri Servizi Web per Aziende Italiane"
+            items={serviceFAQs}
+          />
         </div>
       </section>
 

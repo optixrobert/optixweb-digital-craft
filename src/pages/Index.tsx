@@ -13,6 +13,7 @@ import ClientsSection from "@/components/ClientsSection";
 import { AuditRequestForm } from "@/components/AuditRequestForm";
 import { useSEO, createWebsiteStructuredData } from "@/hooks/useSEO";
 import { MetaRedirects } from "@/components/MetaRedirects";
+import { AdvancedSchema } from "@/components/AdvancedSchema";
 import heroImage from "@/assets/hero-image.jpg";
 
 interface BlogPost {
@@ -146,6 +147,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {seoComponent}
       <MetaRedirects />
+      <AdvancedSchema type="homepage" />
       <Header />
       
       {/* Hero Section with updated value proposition */}

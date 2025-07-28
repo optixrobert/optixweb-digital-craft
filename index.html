@@ -31,48 +31,228 @@
       })(window, document, "clarity", "script", "sd53vosa0i");
     </script>
 
-    <!-- Preconnect per performance -->
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://wa.me">
-    <link rel="dns-prefetch" href="//analytics.google.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     
-    <!-- Schema Markup Organizzazione -->
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//www.google.com">
+    <link rel="dns-prefetch" href="//doubleclick.net">
+    
+    <!-- Sitemap references -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-blogs.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-advanced.xml" />
+    
+    <!-- Advanced Schema.org markup for maximum SEO impact -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": ["Organization", "LocalBusiness"],
-      "name": "Optixweb.space",
-      "alternateName": "OptixWeb",
-      "description": "Web agency italiana specializzata in realizzazione siti web professionali, sviluppo applicazioni web custom e soluzioni e-commerce per PMI e startup",
+      "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
+      "name": "Optix Web",
+      "alternateName": ["OptixWeb", "Optixweb.space"],
+      "description": "Agenzia web italiana leader con 40 esperti specializzati in sviluppo siti web professionali, e-commerce personalizzati e applicazioni su misura per aziende italiane. 12+ anni di esperienza, 200+ progetti completati.",
       "url": "https://optixweb.space",
       "logo": {
         "@type": "ImageObject",
         "url": "https://optixweb.space/src/assets/optixweb-logo.png",
         "width": 200,
-        "height": 200
+        "height": 200,
+        "caption": "Optix Web - Agenzia Web Italiana Logo"
       },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+39-353-200-4367",
-        "contactType": "customer service",
-        "areaServed": "IT",
-        "availableLanguage": ["Italian", "English"]
+      "image": [
+        "https://optixweb.space/src/assets/hero-image.jpg",
+        "https://optixweb.space/src/assets/team-image.jpg",
+        "https://optixweb.space/src/assets/portfolio-showcase.jpg"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "OptixWeb Team"
       },
+      "foundingDate": "2012",
+      "numberOfEmployees": "40+",
+      "slogan": "La tua agenzia web di fiducia in Italia",
+      "telephone": "+39-353-200-4367",
+      "email": "info@optixweb.space",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+39-353-200-4367",
+          "contactType": "customer service",
+          "areaServed": "IT",
+          "availableLanguage": ["Italian", "English"],
+          "contactOption": "TollFree",
+          "hoursAvailable": "Mo-Fr 09:00-18:00"
+        },
+        {
+          "@type": "ContactPoint",
+          "url": "https://wa.me/393532004367",
+          "contactType": "customer service", 
+          "areaServed": "IT",
+          "availableLanguage": "Italian"
+        }
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "IT",
-        "addressLocality": "Italia"
+        "addressLocality": "Italia",
+        "addressRegion": "Italia"
       },
-      "sameAs": [
-        "https://wa.me/393532004367"
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "41.9028",
+        "longitude": "12.4964"
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Italia"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Lombardia"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Lazio"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Veneto"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Emilia-Romagna"
+        }
       ],
+      "serviceArea": {
+        "@type": "Country",
+        "name": "Italia"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servizi Web Professionali per Aziende Italiane",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Realizzazione Siti Web Professionali",
+              "description": "Sviluppo siti web responsive ottimizzati SEO per aziende italiane",
+              "category": "Web Development",
+              "provider": {
+                "@type": "Organization",
+                "name": "Optix Web"
+              }
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "1500",
+              "priceCurrency": "EUR",
+              "valueAddedTaxIncluded": false
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Sviluppo E-commerce Personalizzati",
+              "description": "E-commerce completi per il mercato italiano con sistemi di pagamento locali",
+              "category": "E-commerce Development",
+              "provider": {
+                "@type": "Organization",
+                "name": "Optix Web"
+              }
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "3500",
+              "priceCurrency": "EUR",
+              "valueAddedTaxIncluded": false
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service", 
+              "name": "Applicazioni Web Su Misura",
+              "description": "Sviluppo applicazioni web personalizzate per ottimizzare processi aziendali",
+              "category": "Custom Software Development",
+              "provider": {
+                "@type": "Organization",
+                "name": "Optix Web"
+              }
+            },
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "price": "5000",
+              "priceCurrency": "EUR",
+              "valueAddedTaxIncluded": false
+            }
+          }
+        ]
+      },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
         "reviewCount": "200",
-        "bestRating": "5"
+        "bestRating": "5",
+        "worstRating": "1"
       },
-      "priceRange": "€€"
+      "priceRange": "€€",
+      "paymentAccepted": ["Cash", "Credit Card", "Bank Transfer", "PayPal"],
+      "currenciesAccepted": "EUR",
+      "openingHours": "Mo-Fr 09:00-18:00",
+      "sameAs": [
+        "https://www.linkedin.com/company/optixweb",
+        "https://www.facebook.com/optixweb", 
+        "https://twitter.com/optixweb",
+        "https://www.instagram.com/optixweb",
+        "https://wa.me/393532004367"
+      ],
+      "knowsAbout": [
+        "Sviluppo Web",
+        "E-commerce",
+        "SEO Italia",
+        "UX/UI Design",
+        "Marketing Digitale",
+        "GDPR Compliance",
+        "WordPress",
+        "React",
+        "Node.js"
+      ],
+      "memberOf": [
+        {
+          "@type": "Organization",
+          "name": "Associazione Web Agency Italiane"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- WebSite Schema for search box -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Optix Web - Agenzia Web Italiana",
+      "alternateName": "Optixweb.space",
+      "url": "https://optixweb.space",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://optixweb.space/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Optix Web"
+      }
     }
     </script>
   </head>

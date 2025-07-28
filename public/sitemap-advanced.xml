@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+<!-- Homepage - Massima priorità -->
+<url>
+  <loc>https://optixweb.space/</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>daily</changefreq>
+  <priority>1.0</priority>
+  <image:image>
+    <image:loc>https://optixweb.space/src/assets/hero-image.jpg</image:loc>
+    <image:title>Optix Web - Agenzia Web Italiana</image:title>
+    <image:caption>Agenzia web italiana specializzata in sviluppo siti web professionali</image:caption>
+  </image:image>
+</url>
+
+<!-- Servizi Web - Pagina chiave per conversioni -->
+<url>
+  <loc>https://optixweb.space/servizi</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.95</priority>
+  <image:image>
+    <image:loc>https://optixweb.space/src/assets/portfolio-showcase.jpg</image:loc>
+    <image:title>Servizi Web Professionali Italia</image:title>
+    <image:caption>Servizi web completi per aziende italiane</image:caption>
+  </image:image>
+</url>
+
+<!-- Portfolio - Dimostrazione competenze -->
+<url>
+  <loc>https://optixweb.space/portfolio</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+  <image:image>
+    <image:loc>https://optixweb.space/src/assets/portfolio-showcase.jpg</image:loc>
+    <image:title>Portfolio Progetti Web</image:title>
+    <image:caption>Progetti web realizzati per aziende italiane</image:caption>
+  </image:image>
+</url>
+
+<!-- Chi Siamo - Credibilità aziendale -->
+<url>
+  <loc>https://optixweb.space/chi-siamo</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.85</priority>
+  <image:image>
+    <image:loc>https://optixweb.space/src/assets/team-image.jpg</image:loc>
+    <image:title>Team Optix Web</image:title>
+    <image:caption>40 esperti web con 12+ anni di esperienza</image:caption>
+  </image:image>
+</url>
+
+<!-- Contatti - Conversione diretta -->
+<url>
+  <loc>https://optixweb.space/contatti</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<!-- Servizi FAQ - Supporto SEO Long-tail -->
+<url>
+  <loc>https://optixweb.space/servizi/faq</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.75</priority>
+</url>
+
+<!-- Prenota Consulenza - Call to Action -->
+<url>
+  <loc>https://optixweb.space/prenota</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<!-- Blog - Content Marketing -->
+<url>
+  <loc>https://optixweb.space/blog</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<!-- Bandi Digitali - Servizi Specializzati -->
+<url>
+  <loc>https://optixweb.space/bandi-digitali</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.75</priority>
+</url>
+
+<url>
+  <loc>https://optixweb.space/bandi-digitali/simest-transizione-digitale</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://optixweb.space/bandi-digitali/voucher-digitalizzazione</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://optixweb.space/bandi-digitali/credito-imposta-formazione</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<!-- Privacy - Conformità legale -->
+<url>
+  <loc>https://optixweb.space/privacy</loc>
+  <lastmod>2024-12-28</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.3</priority>
+</url>
+
+</urlset>

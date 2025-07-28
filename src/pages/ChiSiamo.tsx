@@ -4,36 +4,46 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Users, Target, Lightbulb, Heart } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useSEO } from "@/hooks/useSEO";
+import { useSEO, createWebsiteStructuredData } from "@/hooks/useSEO";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { FAQ } from "@/components/FAQ";
 import teamImage from "@/assets/team-image.jpg";
 
 const ChiSiamo = () => {
   const seoComponent = useSEO({
-    title: "Optix Web - Agenzia Digitale Italiana | 40 Esperti Web con 12+ Anni di Esperienza",
-    description: "Optix Web: agenzia digitale italiana specializzata in sviluppo siti web e applicazioni personalizzate. 40 esperti con 12+ anni di esperienza al servizio delle aziende italiane.",
-    keywords: "agenzia web Italia, sviluppo siti web aziende, creazione applicazioni personalizzate, agenzia digitale italiana, sviluppatori web esperti marketing digitale",
+    title: "Chi Siamo | Optix Web - Agenzia Web Italiana con 40 Esperti e 12+ Anni Esperienza",
+    description: "Optix Web: agenzia web italiana leader con 40 esperti specializzati in sviluppo siti web, e-commerce, applicazioni custom. 12+ anni di esperienza, 200+ progetti completati per aziende italiane.",
+    keywords: "agenzia web Italia, team sviluppatori web italiani, agenzia digitale italiana esperti, web agency professionale Italia, sviluppo siti web aziende italiane, consulenza digitale PMI Italia, agenzia web Milano Roma",
     canonicalUrl: "https://optixweb.space/chi-siamo",
-    structuredData: {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Optix Web",
-      "description": "Agenzia digitale italiana specializzata in sviluppo siti web e applicazioni personalizzate",
-      "url": "https://optixweb.space",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "IT"
-      },
-      "numberOfEmployees": "40+",
-      "foundingDate": "2012",
-      "areaServed": "IT",
-      "services": [
-        "Sviluppo siti web personalizzati",
-        "Creazione applicazioni su misura", 
-        "Consulenza marketing digitale",
-        "Ottimizzazione SEO"
-      ]
-    }
+    structuredData: createWebsiteStructuredData()
   });
+
+  const breadcrumbItems = [
+    { name: "Chi Siamo", url: "https://optixweb.space/chi-siamo" }
+  ];
+
+  const aboutFAQs = [
+    {
+      question: "Da quanto tempo operate nel settore web in Italia?",
+      answer: "Optix Web opera da oltre 12 anni nel mercato italiano, con un team di 40 esperti specializzati. Abbiamo completato oltre 200 progetti per aziende italiane di ogni dimensione."
+    },
+    {
+      question: "Quali sono le vostre specializzazioni principali?",
+      answer: "Ci specializziamo in sviluppo siti web professionali, e-commerce personalizzati, applicazioni web su misura, ottimizzazione SEO per Google Italia e consulenza digitale per PMI italiane."
+    },
+    {
+      question: "Lavorate solo con aziende italiane?",
+      answer: "Ci concentriamo principalmente sul mercato italiano per offrire il miglior supporto in lingua italiana, conformità alle normative locali e ottimizzazione per Google Italia."
+    },
+    {
+      question: "Che tipo di supporto offrite dopo la realizzazione?",
+      answer: "Offriamo supporto tecnico completo in italiano: manutenzione, aggiornamenti di sicurezza, backup, assistenza telefonica e consulenza strategica continua per tutti i nostri clienti."
+    },
+    {
+      question: "Come garantite la qualità dei vostri progetti?",
+      answer: "Seguiamo metodologie agili con controlli qualità multi-fase, test approfonditi, conformità agli standard web internazionali e alle normative italiane (GDPR, accessibilità)."
+    }
+  ];
 
   const values = [
     {
@@ -80,6 +90,10 @@ const ChiSiamo = () => {
     <div className="min-h-screen bg-background">
       {seoComponent}
       <Header />
+      
+      <div className="container mx-auto px-4 lg:px-6 pt-8">
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
       
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-optix-light via-background to-optix-light py-20 lg:py-32">
@@ -253,6 +267,16 @@ const ChiSiamo = () => {
               </Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 lg:px-6">
+          <FAQ 
+            title="Domande Frequenti su Optix Web - La Vostra Agenzia Digitale di Fiducia"
+            items={aboutFAQs}
+          />
         </div>
       </section>
 

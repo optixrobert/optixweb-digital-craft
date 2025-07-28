@@ -6,18 +6,62 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ExternalLink, Code, ShoppingCart, Palette, Monitor } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useSEO } from "@/hooks/useSEO";
+import { useSEO, createWebsiteStructuredData } from "@/hooks/useSEO";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { FAQ } from "@/components/FAQ";
 import portfolioShowcase from "@/assets/portfolio-showcase.jpg";
 
 const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState("tutti");
   
   const seoComponent = useSEO({
-    title: "Portfolio - Progetti Realizzati",
-    description: "Scopri i progetti web realizzati da Optixweb.space: siti web professionali, e-commerce di successo e applicazioni web innovative per clienti in tutta Italia.",
-    keywords: "portfolio web agency, progetti siti web, esempi e-commerce, casi studio web, realizzazioni web professionali, siti web Italia",
-    canonicalUrl: "https://optixweb.space/portfolio"
+    title: "Portfolio Progetti Web Italia | Optix Web - Siti Aziendali, E-commerce, Applicazioni",
+    description: "Portfolio completo dei progetti web realizzati da Optix Web per aziende italiane: siti web professionali, e-commerce di successo, applicazioni personalizzate. Oltre 200 progetti completati.",
+    keywords: "portfolio web agency Italia, progetti siti web aziendali, esempi e-commerce italiani, casi studio web agency, realizzazioni siti web professionali Italia, portfolio agenzia digitale italiana, esempi applicazioni web custom",
+    canonicalUrl: "https://optixweb.space/portfolio",
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Portfolio Progetti Web Optix Web",
+      "description": "Portfolio completo dei progetti web realizzati per aziende italiane",
+      "url": "https://optixweb.space/portfolio",
+      "hasPart": [
+        {
+          "@type": "WebSite",
+          "name": "Siti Web Professionali per Aziende",
+          "description": "Esempi di siti web aziendali realizzati"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "E-commerce Personalizzati",
+          "description": "Negozi online di successo per il mercato italiano"
+        }
+      ]
+    }
   });
+
+  const breadcrumbItems = [
+    { name: "Portfolio", url: "https://optixweb.space/portfolio" }
+  ];
+
+  const portfolioFAQs = [
+    {
+      question: "Posso vedere esempi di siti web che avete realizzato per aziende italiane?",
+      answer: "Sì, il nostro portfolio include oltre 200 progetti completati per aziende italiane: siti web aziendali, e-commerce, portali personalizzati. Ogni progetto è studiato specificamente per il mercato italiano."
+    },
+    {
+      question: "Realizzate e-commerce per tutti i settori merceologici?",
+      answer: "Sì, abbiamo esperienza in tutti i settori: moda, alimentare, artigianato, servizi, B2B. Ogni e-commerce è ottimizzato per le specificità del settore e del mercato italiano."
+    },
+    {
+      question: "I vostri progetti includono ottimizzazione SEO per Google Italia?",
+      answer: "Tutti i nostri progetti includono ottimizzazione SEO specifica per Google Italia: ricerca keywords locali, ottimizzazione tecnica, contenuti geolocalizzati per massimizzare la visibilità."
+    },
+    {
+      question: "Quanto tempo impiegate per completare un progetto web?",
+      answer: "I tempi variano: siti vetrina 2-4 settimane, e-commerce 6-12 settimane, applicazioni custom 8-16 settimane. Garantiamo sempre il rispetto delle scadenze concordate con milestone precise."
+    }
+  ];
 
   const categories = [
     { id: "tutti", name: "Tutti i progetti", icon: Monitor },
@@ -98,6 +142,10 @@ const Portfolio = () => {
     <div className="min-h-screen bg-background">
       {seoComponent}
       <Header />
+      
+      <div className="container mx-auto px-4 lg:px-6 pt-8">
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
       
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-optix-light via-background to-optix-light py-20 lg:py-32">
@@ -275,6 +323,16 @@ const Portfolio = () => {
               </Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 lg:px-6">
+          <FAQ 
+            title="Domande Frequenti sul Nostro Portfolio di Progetti Web"
+            items={portfolioFAQs}
+          />
         </div>
       </section>
 
